@@ -92,8 +92,9 @@ $(document).ready(function () {
                 scrollbar: '.swiper-scrollbar',
                 direction: 'vertical',
                 slidesPerView: 'auto',
-                mousewheelControl: true,
-                freeMode: true
+                mousewheelControl: false,
+                freeMode: true,
+                allowTouchMove: false
             });
     
         });
