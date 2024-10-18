@@ -94,7 +94,6 @@ $(document).ready(function () {
                 slidesPerView: 'auto',
                 mousewheelControl: false,
                 freeMode: true,
-                allowTouchMove: false
             });
     
         });
@@ -117,11 +116,9 @@ $(document).ready(function () {
             direction: 'vertical',
             loop: true,
             speed: 800, 
-            //autoplay: {delay: 15000,},
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            }
+            allowTouchMove:false,
+            noMousewheelClass:'swiper-slide',
+            freeMode: false
         });
 
 
