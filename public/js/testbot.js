@@ -111,7 +111,7 @@ var questions = [
     {
         id      :    0,
         question:    "質問グループを選択してください.",
-        selector:    ["園内", "就職", "このホームページ","その他"],
+        selector:    ["園内", "就職", "Page","その他"],
         comments:    ["保育園の日常業務に関すること","保育士採用情報","バグや不具合など",""],
         distination: [1, 2, 3, -1]
     }, 
@@ -253,9 +253,8 @@ function fakeMessage() {
     if ($(".message-input").val() != "") {
       return false;
     }
-    
     $(
-      '<div class="message loading new"><div class="ball1"></div><div class="ball2"></div><div class="ball3"></div><figure class="avatar"><img src="resources/logo4.png" /></figure><span></span></div>'
+      '<div class="message loading new"><div class="ball1"></div><div class="ball2"></div><div class="ball3"></div><figure class="avatar"><img src="img/logo.png" /></figure><span></span></div>'
     ).appendTo($(".mCSB_container"));
   
   
@@ -265,7 +264,7 @@ function fakeMessage() {
       $(".loading").remove();
       let q = createQuestionElement(global_i);
       $(
-        '<div class="message new"><figure class="avatar"><img src="resources/logo4.png" /></figure>' +
+        '<div class="message new"><figure class="avatar"><img src="img/logo.png" /></figure>' +
          getQu(global_i).question +
         "</div>"
       )

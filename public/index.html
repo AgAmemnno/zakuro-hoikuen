@@ -53,8 +53,6 @@
 
     </head>
     <body style="overflow: hidden">
-
-
             <nav class="header">
                 <div class="navbar-s navbar-left theme-3">
                     <div class="navele-s">  
@@ -74,7 +72,7 @@
                     </button>
                     </div>
                     <div class="navele-s">  
-                    <button class="h-btn" type="button" id="home-btn" title="Home">
+                    <button class="h-btn" type="button" id="about-btn" title="Home">
                                     <span id="front-span">一年と一日</span>
                                     <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">globe_asia</span>
                                     <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -90,7 +88,7 @@
                     </button>
                     </div>
                     <div class="navele-s">  
-                    <button class="h-btn" type="button" id="home-btn" title="Home">
+                    <button class="h-btn" type="button" id="news-btn" title="Home">
                                     <span id="front-span">お知らせ</span>
                                     <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">info</span>
                                     <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -109,7 +107,7 @@
                 <h1 class="title-bg theme-3"><span class="title">さくら保育園</span></h1>
                 <div class="navbar-s navbar-right theme-3">
                     <div class="navele-s">  
-                    <button class="h-btn" type="button" id="home-btn" title="Home">
+                    <button class="h-btn" type="button" id="lookbook-btn" title="Home">
                                     <span id="front-span">アクセス</span>
                                     <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">scooter</span>
                                     <svg viewBox="0 0 300 300">
@@ -125,7 +123,7 @@
                     </button>
                     </div>
                     <div class="navele-s">  
-                    <button class="h-btn" type="button" id="home-btn" title="Home">
+                    <button class="h-btn" type="button" id="contacts-btn" title="Home">
                                     <span id="front-span">お問い合わせ</span>
                                     <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">email</span>
                                     <svg viewBox="0 0 300 300">
@@ -177,7 +175,7 @@
                         <a href="javascript:void(0)" class="small-header-a theme-3" onclick="menu_close()">x</a>
                     </div> 
                     <div class="navele-s-modal navele-s-menu1">  
-                        <button  class="h-btn" type="button" id="home-btn" title="Home">
+                        <button  class="h-btn" type="button"  onclick="menu_func(event,'home')" title="Home">
                                          <span id="front-span">ホーム</span>
                                          <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">hub</span>
                                          <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -193,7 +191,7 @@
                         </button>
                     </div>
                     <div class="navele-s-modal navele-s-menu2">  
-                        <button class="h-btn" type="button" id="home-btn" title="a year a day">
+                        <button class="h-btn" type="button" onclick="menu_func(event,'days')" title="a year a day">
                                         <span id="front-span">一年と一日</span>
                                         <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">globe_asia</span>
                                         <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -209,7 +207,7 @@
                         </button>
                     </div>
                     <div class="navele-s-modal navele-s-menu3">  
-                        <button class="h-btn" type="button" id="home-btn"  title= "info" >
+                        <button class="h-btn" type="button" onclick="menu_func(event,'info')" title= "info" >
                                          <span id="front-span">お知らせ</span>
                                          <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">info</span>
                                          <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -223,9 +221,9 @@
                                           </g>
                                         </svg>
                         </button>
-                      </div>
+                    </div>
                     <div class="navele-s-modal navele-s-menu4">  
-                        <button class="h-btn" type="button" id="home-btn" title="access">
+                        <button class="h-btn" type="button" onclick="menu_func(event,'access')" title="access">
                                          <span id="front-span">アクセス</span>
                                          <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">scooter</span>
                                          <svg viewBox="0 0 300 300">
@@ -241,7 +239,7 @@
                         </button>
                     </div>
                     <div class="navele-s-modal navele-s-menu5">  
-                        <button class="h-btn" type="button" id="home-btn" title="mail">
+                        <button class="h-btn" type="button" onclick="menu_func(event,'email')" title="mail">
                                          <span id="front-span">お問い合わせ</span>
                                          <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">email</span>
                                          <svg viewBox="0 0 300 300">
@@ -255,203 +253,154 @@
                                           </g>
                                         </svg>
                         </button>
+                    </div>
                 </div>
             </nav>
-        <script>
-            var menu_is_open = false;
-            function navbtn(){
-                let btn  = document.querySelectorAll('.h-btn');
-                let rem  = (1.4 *16); 
-                let divw= 150/2;
-                let ofs  = [3,5,4,4,6];
-                let  ofs_len = ofs.length;
-                btn.forEach((ele,i)=>{
-                    let Width = rem*ofs[i%ofs_len]/2.;
-                    ele.children[2].style.marginLeft = `-${divw-28}px`;
-                });
+            <div class="swiper myswiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                    <div class="map border-deform">
+                        <div id="map">
+                        <h3 class="border-deform" >アクセス地図</h3>
+                        <img src="resources/map.png"  class="img-map border-deform"/>
+                        </div>
+                        <div class="map-c border-deform">
+                        <img src="resources/tane.png"  class="img-map2"/>
+                        <div class="map-c2 border-deform"  >
+                            <h4 class="det">〒331-0821<br> さいたま市北区別所町98-6</h4>
+                            <h4 class="det">TEL:048-664-5054</h4>
+                            <h4 class="det">FAX:048-664-5054</h4>
+                            <h4  class="det">バス停（白樺通り）から徒歩５分です。</h4>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="swiper-slide">
+                    <div class="map border-deform">
+                        <div class="map2 border-deform">
+                        <div id="newspanel">
+                        <ul class="news-list">
+                            <li class="item">
+                                <a href="#">
+                                    <p class="date">2020/4/15</p>
+                                    <p class="category"><span>お知らせ</span></p>
+                                    <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="#">
+                                    <p class="date">2020/4/15</p>
+                                    <p class="category"><span>お知らせ</span></p>
+                                    <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="#">
+                                    <p class="date">2020/4/15</p>
+                                    <p class="category"><span>お知らせ</span></p>
+                                    <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
+                                </a>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="swiper-slide">
+                    <div class="chat">
+                        <div class="chat-title">
+                        <figure class="avatar">
+                            <img src="img/logo2.png"/>
+                        </figure>
+                        <h3>FAQ（よくある質問） ボーボーボーット　</h3>
+                        <h2>call center</h2>
+                        </div>
+                        <div class="messages">
+                        <div class="messages-content"></div>
+                        </div>
+                        <div class="message-box">
+                        <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+                        <button type="submit" class="message-reset">Reset</button>
+                        <button type="submit" class="message-submit">Send</button>
+                        </div>
 
-            }
-            function menu_open(){
-                var modal = document.getElementById("ModalMenu");
-                modal.style.display = "block";
-                var modalopen = document.getElementById("ModalOpen");
-                modalopen.style.display = "none";
-                menu_is_open = true;
-            }
-
-        
-            function menu_close(){
-                if( !menu_is_open ){
-                    return;
-                }
-                var modal = document.getElementById("ModalMenu");
-                modal.style.display = "none";
-                var modalopen = document.getElementById("ModalOpen");
-                modalopen.style.display = "block";
-                menu_is_open = false;
-            }
-            
-
-            function WindowSize() {
-                if(window.innerWidth > 1250){
-                    menu_close();
-                }
-            }
-
-            window.onresize = WindowSize;
-            navbtn();
-        </script>
-
-
-        <div class="footer">
-            <svg
-            class="waves2"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 28"
-            preserveAspectRatio="none"
-            shape-rendering="auto"
-            transform='scale(1,1)'>
-            <defs>
-            <path
-                id="gentle-wave"
-                d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-            />
-            </defs>
-            <g class="parallax">
-            <use xlink:href="#gentle-wave" x="48" y="0" id="wave1" />
-            <use xlink:href="#gentle-wave" x="48" y="3" id="wave2" />
-            <use xlink:href="#gentle-wave" x="48" y="5" id="wave3" />
-            <use xlink:href="#gentle-wave" x="48" y="7" id="wave4" />
-            </g>
-            </svg>
-            <div class="inner-footer">
-                <small id="cr">© Tiresimas Co. Ltd. 2024</small>
-            </div>
-        </div>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" width="0" height="0">
-            <defs>
-                <path id="circlePath" d="M 150, 150 m -50, 0 a 50,50 0 0,1 100,0 a 50,50 0 0,1 -100,0" />
-            </defs>
-        </svg>
-    <!-- 
-        <div class="swiper myswiper">
-        
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-            <div class="map border-deform">
-                <div id="map">
-                <h3 class="border-deform" >アクセス地図</h3>
-                <img src="resources/map.png"  class="img-map border-deform"/>
-                </div>
-                <div class="map-c border-deform">
-                <img src="resources/tane.png"  class="img-map2"/>
-                <div class="map-c2 border-deform"  >
-                    <h4 class="det">〒331-0821<br> さいたま市北区別所町98-6</h4>
-                    <h4 class="det">TEL:048-664-5054</h4>
-                    <h4 class="det">FAX:048-664-5054</h4>
-                    <h4  class="det">バス停（白樺通り）から徒歩５分です。</h4>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="swiper-slide">
-            <div class="map border-deform">
-                <div class="map2 border-deform">
-                <div id="newspanel">
-                <ul class="news-list">
-                    <li class="item">
-                        <a href="#">
-                            <p class="date">2020/4/15</p>
-                            <p class="category"><span>お知らせ</span></p>
-                            <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#">
-                            <p class="date">2020/4/15</p>
-                            <p class="category"><span>お知らせ</span></p>
-                            <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#">
-                            <p class="date">2020/4/15</p>
-                            <p class="category"><span>お知らせ</span></p>
-                            <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
-                        </a>
-                    </li>
-                </ul>
-                </div>
-            </div>
-            </div>
-            </div>
-            <div class="swiper-slide">
-            <div class="chat">
-                <div class="chat-title">
-                <figure class="avatar">
-                    <img src="resources/logo4.png"/>
-                </figure>
-                <h3>FAQ（よくある質問） ボーボーボーット　</h3>
-                <h2>call center</h2>
-                </div>
-                <div class="messages">
-                <div class="messages-content"></div>
-                </div>
-                <div class="message-box">
-                <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-                <button type="submit" class="message-reset">Reset</button>
-                <button type="submit" class="message-submit">Send</button>
-                </div>
-
-            </div>
-
-            </div>
-            <div class="swiper-slide" id="slide-canv">
-                    <div id="home-intro-scroll-sensor"></div>
-                    
-                    <div id="home-intro">
                     </div>
 
-                    <div class="lightbox" id="msg-0" style="Display:none">
-                    <span style="background-image: url('./img/kyoukai.png')"></span>
-                    <p class="anim5">さくら保育園</p>
                     </div>
+                    <div class="swiper-slide" id="slide-canv">
+                            <div id="home-intro-scroll-sensor"></div>
+                            
+                            <div id="home-intro">
+                            </div>
 
-                    <div id="msg-1" class="labelDiv" style="Display:none">
-                    <h1 class="anim1">3時のおやつは、とらや</h1>
+                            <div class="lightbox" id="msg-0" style="Display:none">
+                            <span style="background-image: url('./img/kyoukai.png')"></span>
+                            <p class="anim5">さくら保育園</p>
+                            </div>
+
+                            <div id="msg-1" class="labelDiv" style="Display:none">
+                            <h1 class="anim1">3時のおやつは、とらや</h1>
+                            </div>
+                            
+                            <div id="msg-2" class="labelDiv" style="Display:none">
+                            <p class="anim2">夕焼けニャンニャン、また明日</p>
+                            </div>
+                            <div id="msg-3" class="labelDiv" style="Display:none">
+                            <p class="split-text anim3">YoruNo藤Dana</p>
+                            </div>
+                            <div id="msg-4" class="labelDiv" style="Display:none">
+                            <p class="anim4">０時、黄金のスライム</p>
+                            </div>
+                            <div id="msg-5" class="labelDiv" style="Display:none">夜明け</div>
+                            
+                            <div id="msg-6" class="labelDiv" style="Display:none"> 
+                            　<h1 class="anim1">７時に登園します。おはよう。</h1>
+                            </div>
                     </div>
-                    
-                    <div id="msg-2" class="labelDiv" style="Display:none">
-                    <p class="anim2">夕焼けニャンニャン、また明日</p>
-                    </div>
-                    <div id="msg-3" class="labelDiv" style="Display:none">
-                    <p class="split-text anim3">YoruNo藤Dana</p>
-                    </div>
-                    <div id="msg-4" class="labelDiv" style="Display:none">
-                    <p class="anim4">０時、黄金のスライム</p>
-                    </div>
-                    <div id="msg-5" class="labelDiv" style="Display:none">夜明け</div>
-                    
-                    <div id="msg-6" class="labelDiv" style="Display:none"> 
-                    　<h1 class="anim1">７時に登園します。おはよう。</h1>
-                    </div>
+                </div> 
+                <div class="swiper-pagination"></div>
+            </div> 
+            <div class="footer">
+                <svg
+                class="waves2"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28"
+                preserveAspectRatio="none"
+                shape-rendering="auto"
+                transform='scale(1,1)'>
+                <defs>
+                <path
+                    id="gentle-wave"
+                    d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                />
+                </defs>
+                <g class="parallax">
+                <use xlink:href="#gentle-wave" x="48" y="0" id="wave1" />
+                <use xlink:href="#gentle-wave" x="48" y="3" id="wave2" />
+                <use xlink:href="#gentle-wave" x="48" y="5" id="wave3" />
+                <use xlink:href="#gentle-wave" x="48" y="7" id="wave4" />
+                </g>
+                </svg>
+                <div class="inner-footer">
+                    <small id="cr">© Tiresimas Co. Ltd. 2024</small>
+                </div>
             </div>
-        </div> 
-        <div class="swiper-pagination"></div>
-        </div> 
 
-
-
-    　　　-->
-
-    <!-- script src="js/easing.js"></script>
+    <script src="js/easing.js"></script>
     <script src="js/inertiaScroll.js"></script>
     <script src="js/rdc.js"></script>
 
     <script  type="module" src="js/home-intro.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script src="js/testbot.js"></script -->
+    <script src="js/testbot.js"></script>
+
+
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" width="0" height="0">
+        <defs>
+            <path id="circlePath" d="M 150, 150 m -50, 0 a 50,50 0 0,1 100,0 a 50,50 0 0,1 -100,0" />
+        </defs>
+    </svg>
     </body>
 </html>

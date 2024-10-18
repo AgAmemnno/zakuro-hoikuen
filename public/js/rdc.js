@@ -1,4 +1,80 @@
 /* Roberta di Camerino - Main controller */
+var swiperH =null;
+var menu_is_open = false;
+
+function navbtn(){
+    let btn  = document.querySelectorAll('.h-btn');
+    let rem  = (1.4 *16); 
+    let divw= 150/2;
+    let ofs  = [3,5,4,4,6];
+    let  ofs_len = ofs.length;
+    btn.forEach((ele,i)=>{
+        let Width = rem*ofs[i%ofs_len]/2.;
+        ele.children[2].style.marginLeft = `-${divw-28}px`;
+    });
+
+}
+
+function menu_open(){
+    var modal = document.getElementById("ModalMenu");
+    modal.style.display = "block";
+    var modalopen = document.getElementById("ModalOpen");
+    modalopen.style.display = "none";
+    menu_is_open = true;
+}
+
+
+function menu_close(){
+    if( !menu_is_open ){
+        return;
+    }
+    var modal = document.getElementById("ModalMenu");
+    modal.style.display = "none";
+    var modalopen = document.getElementById("ModalOpen");
+    modalopen.style.display = "block";
+    menu_is_open = false;
+}
+
+
+function WindowSize() {
+    if(window.innerWidth > 1250){
+        menu_close();
+    }
+}
+
+window.onresize = WindowSize;
+navbtn();
+
+function menu_func(e,name){
+    e.preventDefault();
+    switch(name){
+        case 'home':{
+            swiperH.slideTo(3);
+            break;
+        }
+        case 'days':{
+            swiperH.slideTo(3);
+            break;
+        }
+        case 'info':{
+            swiperH.slideTo(1);
+            break;
+        }
+        case 'access':{
+            swiperH.slideTo(0);
+            break;
+        }
+        case 'email':{
+            swiperH.slideTo(2);
+            break;
+        }
+    }
+    activateBtn(e);
+    menu_close();
+}
+
+
+
 
 $(document).ready(function () {
 
@@ -35,23 +111,8 @@ $(document).ready(function () {
             });
     
         });
-    
-        /*
-        var swiperH = new Swiper('.swiper', {
-            //pagination: '.swiper-pagination-h',
-            //paginationClickable: true,
-           
-            simulateTouch: false,
-            initialSlide: 4,
-            onlyExternal: true
-        });
-                const swiperH = new Swiper(".swiper", {
-            initialSlide: 0,
-            direction: 'vertical',
-          });
-        */
 
-        const swiperH = new Swiper('.myswiper', {
+        swiperH = new Swiper('.myswiper', {
             direction: 'vertical',
             loop: true,
             speed: 800, 
@@ -61,7 +122,8 @@ $(document).ready(function () {
                 clickable: true,
             }
         });
-    
+
+
         $('#home-btn').on('click', function(e){
             //console.log(e.target.id);
             e.preventDefault();
