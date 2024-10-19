@@ -210,7 +210,7 @@ nav > h1:before {
     display: inline-block;
   }
 }
-@media (max-width: 780px) {
+@media (max-width: 780px) or (max-height: 1000px) {
   .title-bg {
     font-size: 1rem;
     background-size: 8rem;
@@ -430,7 +430,7 @@ nav > h1:before {
     height: 7vh;
   }
 }
-@media (max-width: 780px) {
+@media (max-width: 780px) or (max-height: 1000px) {
   #cr {
     font-size: 1rem;
   }
@@ -666,7 +666,7 @@ nav > h1:before {
     opacity: 1;
   }
 }
-@media (max-width: 780px) {
+@media (max-width: 780px) or (max-height: 1000px) {
   .anim1, .anim2, .anim4 {
     font-size: 1.4rem;
     writing-mode: vertical-rl;
@@ -820,7 +820,7 @@ i {
   margin: 8px 13px 0;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 780px) or (max-height: 1000px) {
   .img-map2 {
     display: none;
   }
@@ -1375,7 +1375,7 @@ p {
   }
 }
 */
-@media (max-width: 780px) {
+@media (max-width: 780px) or (max-height: 1000px) {
   .chat {
     width: 100%;
     height: 100%;
