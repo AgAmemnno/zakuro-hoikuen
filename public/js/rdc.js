@@ -120,7 +120,7 @@ $(document).ready(function () {
             noMousewheelClass:'swiper-slide',
             freeMode: false
         });
-
+        swiperH.slideTo(3);
 
         $('#home-btn').on('click', function(e){
             //console.log(e.target.id);
