@@ -216,6 +216,9 @@ nav > h1:before {
     background-size: 8rem;
     background-position: top;
   }
+  .small-header-a {
+    font-size: 1.2rem;
+  }
   /*
   .header {
     height: 
@@ -663,6 +666,25 @@ nav > h1:before {
     opacity: 1;
   }
 }
+@media (max-width: 780px) {
+  .anim1, .anim2, .anim4 {
+    font-size: 1.4rem;
+    writing-mode: vertical-rl;
+  }
+  .anim3 div span {
+    font-size: 1.4rem;
+  }
+  .anim5 {
+    font-size: 1.5rem;
+    top: -15%;
+    left: 10%;
+  }
+  .text-combine {
+    -webkit-text-combine: horizontal;
+    -ms-text-combine-horizontal: all;
+    text-combine-upright: all;
+  }
+}
 img {
   max-height: 50vh;
 }
@@ -742,14 +764,18 @@ img {
 h3.border-deform {
   width: -moz-fit-content;
   width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   padding-left: 1.5vw;
   padding-right: 1.5vw;
   margin-inline: auto;
   font-weight: normal;
   color: rgba(48, 47, 47, 0.862745098);
   font-size: 3rem;
-  background-color: #faaca8;
-  border-color: #f77e78;
+  background-color: #fbbab6;
+  border-color: #fbc3c0;
+  top: 2vh;
+  position: sticky;
 }
 
 .det {
@@ -794,41 +820,67 @@ i {
   margin: 8px 13px 0;
 }
 
-@media only screen and (max-width: 720px) {
+@media (max-width: 780px) {
+  .img-map2 {
+    display: none;
+  }
   .map {
-    height: 450px;
-    margin: calc(50vh - 225px) auto;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-areas: "margin" "title" "map" "ad";
+    grid-template-columns: 100vw;
+    grid-template-rows: 2vh 8vh 50vh 1fr;
+    margin: 0 auto;
     overflow: hidden;
+  }
+  .map > h3 {
+    grid-area: title;
+    margin: 1vh auto;
   }
   #map {
     width: 100%;
-    height: 200px;
+    height: 100%;
+    grid-area: map;
   }
   .map-c {
-    float: right;
+    grid-area: ad;
     width: 100%;
-  }
-  button {
-    float: right;
-    margin-top: -75px;
-  }
-}
-@media only screen and (max-width: 460px) {
-  p {
-    display: none;
-  }
-  h3 {
-    margin-bottom: 20px;
-  }
-  button {
+    padding: 0;
     float: none;
-    margin-top: 10px;
+  }
+  .map-c2 {
+    height: 100%;
+  }
+  .border-deform {
+    border-radius: 0;
+  }
+  h3.border-deform {
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+    margin-inline: auto;
+    font-size: 1.3rem;
+  }
+  .img-map {
+    max-height: 50vh;
+    background-color: rgba(0, 0, 0, 0.644);
   }
   .det {
-    margin-bottom: 9px;
+    font-size: small;
   }
 }
-.map2 {
+.newspanel {
+  width: 70%;
+  height: 70%;
+  box-shadow: 0 0 40px -10px black;
+  background: #ddd6f3;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  margin: 6vh auto auto auto;
+  overflow: hidden;
+}
+
+.newspanel2 {
   width: 70%;
   height: 70%;
   box-shadow: 0 0 40px -10px black;
@@ -907,7 +959,7 @@ i {
   color: #00F;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 780px) {
   .news-list .item a {
     flex-wrap: wrap;
   }
@@ -916,6 +968,17 @@ i {
   }
   .news-list .item .title {
     margin-top: 10px;
+  }
+  .newspanel {
+    height: 100%;
+    width: 100%;
+    margin: 3vh auto;
+    overflow: hidden;
+  }
+  .newspanel2 {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
   }
 }
 a {
@@ -1345,27 +1408,5 @@ p {
     width: 2em;
     height: 2em;
   }
-  /*
-  .message-box {
-    & .message-input {
-      font-size: $bot-font-size3;
-    }
-    & .message-submit {
-      font-size: $bot-font-size3;
-    }
-    & .message-reset {
-      font-size: $bot-font-size3;
-    }
-  }
-  .message {
-    font-size: $bot-font-size3;
-    .timestamp {
-      font-size: $bot-font-size4;
-    }
-  }
 
-  input[type="radio"]:checked + label {
-    font-size: $bot-font-size3;
-  }
-  */
 }
