@@ -490,6 +490,15 @@ nav > h1:before {
   top: 20%;
   left: 40%;
   z-index: 1;
+  font-size: 7rem;
+}
+
+.labelDiv2 {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  z-index: 1;
+  font-size: 7rem;
 }
 
 .anim1 {
@@ -504,6 +513,10 @@ nav > h1:before {
   border-right: 2px solid;
   animation: type1 1s steps(90) 0.3s 1 normal both, cursor1 1s step-end infinite;
   position: relative;
+}
+
+#anim1-add {
+  font-size: 2rem;
 }
 
 @keyframes type1 {
@@ -670,6 +683,13 @@ nav > h1:before {
   .anim1, .anim2, .anim4 {
     font-size: 1.4rem;
     writing-mode: vertical-rl;
+  }
+  .labelDiv2 {
+    font-size: 1.4rem;
+    writing-mode: vertical-rl;
+  }
+  #anim1-add {
+    font-size: 1.2rem;
   }
   .anim3 div span {
     font-size: 1.4rem;
@@ -959,7 +979,7 @@ i {
   color: #00F;
 }
 
-@media screen and (max-width: 780px) {
+@media screen and ((max-width: 780px) or (max-height: 1000px)) {
   .news-list .item a {
     flex-wrap: wrap;
   }
@@ -1408,5 +1428,27 @@ p {
     width: 2em;
     height: 2em;
   }
+  /*
+  .message-box {
+    & .message-input {
+      font-size: $bot-font-size3;
+    }
+    & .message-submit {
+      font-size: $bot-font-size3;
+    }
+    & .message-reset {
+      font-size: $bot-font-size3;
+    }
+  }
+  .message {
+    font-size: $bot-font-size3;
+    .timestamp {
+      font-size: $bot-font-size4;
+    }
+  }
 
+  input[type="radio"]:checked + label {
+    font-size: $bot-font-size3;
+  }
+  */
 }

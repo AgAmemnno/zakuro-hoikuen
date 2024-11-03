@@ -357,7 +357,7 @@ class ObjectParser{
 
 
 class Days{
-    
+    timeList = [15,17,20,21,24,3,5,9]
     Params = {
         15:{
             rayleigh: 0.214,
@@ -499,89 +499,220 @@ class Days{
 		tDay.renderer.toneMappingExposure = effectController.exposure;
 
 	}
-
-	update(e) {
+	lastTime = 0;
+	updateGUI(e) {
 	
 	    var VIDEO_INIT = 0,
 	        VIDEO_END = Parser.maxDur*24,
 	        auxTime;
 	
 	    auxTime = currentTime + e;
-	    mixer.timeScale = 0.4;
-	
+	    
 	    Parser.perDur = 100.* (mixer.time / Parser.maxDur);
+		if( (!this.setTime) && ((Parser.perDur % 100.) < 1)){
+			this.lastTime = performance.now();
+			this.setTime = true;
+
+		}else if( this.setTime && (Parser.perDur % 100.) > 99. ){
+			const thisTime = performance.now();
+			const second = (thisTime- this.lastTime)/1000.;
+			this.setTime = false;
+			console.log("time ",second);
+		}
+		//console.log("time duration ",Parser.perDur);
 		
 	    if (auxTime <= VIDEO_END & auxTime >= VIDEO_INIT) {
-	
+			//console.log("time duration auxTime ",auxTime,"  e ",e,"  currenttime",currentTime );
 	        currentTime = auxTime;
 	        var cooD = e;
-	
 	        position =  parseInt(currentTime*10, 10);
-	        //console.log("e  ",e,"    position  ",position,"   mixer ",mixer.time,"   percent ",Parser.perDur);
-	        mixer.update( cooD  );
+	        mixer.update( cooD*0.1 );
 	        Parser.update(scene);
-	    }
+	    }else{
+			//console.log("time duration e < 0 auxTime  ",auxTime,"  e ",e,"  currenttime",currentTime );
+		}
 		
 	    if(GUION){
 			this.updateUniformGUI();
 		}else{
 			this.updateUniform();
 		}
-	    // renderer.render(scene, camera);
+	    //renderer.render(scene, camera);
 	    //startAnimation()
 	}
+	timerStart = false;
+	timerOn(e){
+		if(!this.timerStart){
+			var updateScale = false;
+			var switchSpan = 5;
+			var timeScale = 0.1;
+	        switch (this.currentPhase) {
+		        /* 0 ===> 15:00  */
+		        case 15:
+	            {
+					this.timeSpan =  0.5;
+					timeScale = 0.2;
+					updateScale = true;
+	                break;
+		        }
+			
+					
+	            /* 16 ===> 17:00  */
+				case 17:
+	            {
+					this.timeSpan =  3;
+					updateScale = true;
+	                break;
+	            }
 	
-	updateOverlay(e0){
-	    //console.log('c:'+ e);
-	    let e = Parser.perDur % 100.;
+	            /* 26 ===> 20:00  */
+	            case 20:
+	            {
+					this.timeSpan =  3;
+					updateScale = true;
+	                break;
+	            }
+					
+	            /* 36 ===> 21:00  */
+				case 21:
+	            {
+	          
+					this.timeSpan =  3;
+					updateScale = true;
+	                break;
+	            }
+					
+	            /* 46 ===> 24:00  */
+				case 24:
+	            {
+					this.timeSpan =  3;
+					updateScale = true;
+	                break;
+	            }
+					
+	            /* 56 ===> 3:00  */
+				case 3:
+	            {
+					this.timeSpan =  3;
+					updateScale = true;
+	                break;
+	            }
+	
+	            /* 66 ===> 5:00  */
+	            case 5:
+	            {
+					this.timeSpan =  3;
+					updateScale = true;
+	                break;
+	            }
+			   
+				/* 86 ===> 9:00  */
+	            case 9:
+	            {
+					this.timeSpan =  1;
+					updateScale = true;
+	                break;
+	            }	
+					
+	        }
+			if(updateScale){
+				this.timeScale =timeScale;
+				this.lastTime = performance.now();
+				this.timerStart = true;
+				//console.log("updateScale  e " ,e)
+			}
+		}
+		//console.log("time duration ",Parser.perDur);
+	}
+	timeScale  =1.;
+	timerOff(){
+		if(this.timerStart){
+			const thisTime = performance.now();
+			const second = (thisTime- this.lastTime)/1000.;
+			if(second > this.timeSpan){
+				this.timerStart = false;
+				this.timeScale = 1.;
+				//console.log("time ",second);
+			}
+		}
+	}
+	
+	updateTimeScale(e,diff){
+		this.timerOn(e);
+		this.timerOff();
+		mixer.update( diff*this.timeScale);
+	    Parser.update(scene);
+		
+	}
+	updateOverlay(diff){
+		
+		var VIDEO_INIT = 0,
+		VIDEO_END = Parser.maxDur*24,
+		auxTime;
+	
+	    auxTime = currentTime + diff;
+	    
+	    Parser.perDur = 100.* (mixer.time / Parser.maxDur);
+		let e = Parser.perDur % 100.;
+		//console.log("time duration diff ",diff);
+	    if((diff > -2.) && (diff < 2.) ){
+			//console.log("time duration auxTime ",auxTime,"  e ",e,"  currenttime",currentTime );
+	        currentTime = auxTime;
+			this.updateTimeScale(e,diff);
+	    }else{
+			console.error("time duration e < 0 auxTime  ",auxTime,"  e ",e,"  currenttime",currentTime ," diff ",diff);
+		}
+
 		//console.log(e);
         switch (true) {
 	        /* 0 ===> 15:00  */
-	        case (e >0 && e < 16) :
+	        case (e >0 && e < 26) :
             {
+				//mixer.timeScale = 0.1;
 			    pointsToggle(true);
-                this.updateUniformByTime(15,e/16.);
+                this.updateUniformByTime(15,e/26.);
                 break;
 	        }
             
             /* 16 ===> 17:00  */
-            case (e >=16 && e < 26):
+            case (e >=26 && e < 36):
             {
+				//mixer.timeScale = 0.3;
 				pointsToggle(false);
-                this.updateUniformByTime(17, (e-16)/10.);
+                this.updateUniformByTime(17, (e-26)/10.);
                 break;
             }
 
             /* 26 ===> 20:00  */
-            case (e >=26 && e < 36): 
+            case (e >=36 && e < 46): 
             {
                 pointsToggle(true);
-                this.updateUniformByTime(20, (e-26)/10.);
+                this.updateUniformByTime(20, (e-36)/10.);
                 break;
             }
 				
             /* 36 ===> 21:00  */
-            case (e >=36 && e < 46): 
+            case (e >=46 && e < 56): 
             {
           
                 pointsToggle(true);
-                this.updateUniformByTime(21, (e-36)/10.);
+                this.updateUniformByTime(21, (e-46)/10.);
                 break;
             }
 				
             /* 46 ===> 24:00  */
-            case (e >=46 && e < 56): 
+            case (e >=56 && e < 61): 
             {
                 pointsToggle(true);
-                this.updateUniformByTime(24, (e-46)/10.);
+                this.updateUniformByTime(24, (e-56)/5.);
                 break;
             }
 				
             /* 56 ===> 3:00  */
-            case (e >=56 && e < 66): 
+            case (e >=61 && e < 66): 
             {
                 pointsToggle(true);
-                this.updateUniformByTime(3, (e-56)/10.);
+                this.updateUniformByTime(3, (e-61)/5.);
                 break;
             }
 
@@ -601,80 +732,105 @@ class Days{
                 break;
             }	
 				
-            case (e > 80):
-            {
-                pointsToggle(true);
-                break;
-            }
+
         }
-        const timeDisplay = 5;
-        var displayMsg = null;
+        const coordinateDisplay = 10;
+		var msgs = {
+			'#msg-policy1' :false,
+			'#msg-policy2' :false,
+			'#msg-policy3' :false,
+			'#msg-policy4' :false,
+			'#msg-2' :false,
+			'#msg-3' :false,
+			'#msg-4' :false,
+			'#msg-0' :false,
+			'#msg-6' :false,
+		}
         switch (true) {
 	        /* 0 ===> 15:00  */
-	        case (e >0 && e < timeDisplay) :
+	        case (e >85 && e < 91) :
             {
-				$('#msg-1').css("display", "block");
-                displayMsg = 1;
+				$('#msg-policy1').css("display", "block");
+				msgs['#msg-policy1'] = true;
                 break;
 	        }
             
+			case (e >91 && e < 100) :
+            {
+				$('#msg-policy2').css("display", "block");
+				msgs['#msg-policy2'] = true;
+                break;
+	        }
+			case (e >0 && e < 10) :
+            {
+				$('#msg-policy3').css("display", "block");
+				msgs['#msg-policy3'] = true;
+                break;
+	        }		
+		    case (e >10 && e < 26) :
+            {
+				$('#msg-policy4').css("display", "block");
+				msgs['#msg-policy4'] = true;
+                break;
+	        }		
             /* 16 ===> 17:00  */
-            case (e >=16 && e < (timeDisplay +16)):
+            case (e >=26 && e < (coordinateDisplay +26)):
             {
                 $('#msg-2').css("display", "block");
-                displayMsg = 2;
+				msgs['#msg-2'] = true;
                 break;
             }
 
             /* 26 ===> 20:00  */
-            case (e >=26 && e < (timeDisplay +26)):
+            case (e >=36 && e < (coordinateDisplay +36)):
             {
                 $('#msg-3').css("display", "block");
-                displayMsg = 3;
+				msgs['#msg-3'] = true;
                 break;
             }
 				
             /* 36 ===> 21:00  */
-            case (e >=36 && e < (timeDisplay +36)):
+            case (e >=46 && e < (coordinateDisplay +46)):
             {
                 $('#msg-4').css("display", "block");
-                displayMsg = 4;
+				msgs['#msg-4'] = true;
                 break;
             }
 				
             /* 46 ===> 24:00  */
-            case (e >=46 && e < (timeDisplay +46)):
+            case (e >=56 && e < (coordinateDisplay +56)):
             {
 
-                break;
+                //break;
             }
 				
             /* 56 ===> 3:00  */
-            case (e >=56 && e < (timeDisplay +56)):
+            case (e >=56 && e < (coordinateDisplay +56)):
             {
 
-                break;
+                //break;
             }
 
             /* 66 ===> 5:00  */
-            case (e >=66 && e < (timeDisplay +66)):
+            case (e >=66 && e < (coordinateDisplay +66)):
             {
                 $('#msg-6').css("display", "block");
-                displayMsg = 6;
+				msgs['#msg-6'] = true;
                 break;
             }
 		   
 			/* 86 ===> 9:00  */
-            case (e >=80 && e < (timeDisplay + 80)):
+            case (e >=80 && e < (85)):
             {
                 $('#msg-0').css("display", "block");
-				displayMsg = 0;
+				msgs['#msg-0'] = true;
                 break;
             }	
         }
-        for(let i = 0;i<=6;i++){
-            if(i != displayMsg){
-                $(`#msg-${i}`).css("display", "none");
+		
+        for(let k in msgs){
+			if(!msgs[k]){
+                $(k).css("display", "none");
             }
         }
 	}
@@ -701,60 +857,53 @@ class Days{
     }
 
 	updateUniformByTime(T,t){
+		this.currentPhase = T;
+		var i0 = this.timeList.indexOf(T);
+		var l = this.timeList.length;
+		var i1 = (i0+1) % l 
+		var T1 = this.timeList[i1];
+		this.prePara  = this.Params[T];
+		this.postPara = this.Params[T1];
+
 		switch(T){
 			case 15:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[15];
-                this.postPara = this.Params[17];
                 this.updateEase(t);
 				break;
 			};
 			case 17:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[17];
-                this.postPara = this.Params[20];
                 this.updateEase(t);
 				break;
 			};
 			case 20:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[20];
-                this.postPara = this.Params[21];
                 this.updateEase(t);
 				break;
 			};
 			case 21:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[21];
-                this.postPara = this.Params[24];
                 this.updateEase(t);
 				break;
 			};
 			case 24:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[24];
-                this.postPara = this.Params[3];
                 this.updateEase(t);
 				break;
 			};
 			case 3:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[3];
-                this.postPara = this.Params[5];
+
                 this.updateEase(t);
 				break;
 			};
 			case 5:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[5];
-                this.postPara = this.Params[9];
                 this.updateEase(t);
 				break;
 			};
 			case 9:{
                 this.ease = easeLinear;
-                this.prePara  = this.Params[9];
-                this.postPara = this.Params[15];
                 this.updateEase(t);
 				break;
 			};
@@ -900,15 +1049,17 @@ class Days{
 	            var progress = (coords.y - lastTimestamp);
 
 	            var param = tDay.getParam(progress);
-
-	            tDay.update(param);
+	            
 				if(GUION){
+				   tDay.updateGUI(param);
 	               tDay.updateOverlay0(position);
 				}else{
-				   tDay.updateOverlay(position);
+				   tDay.updateOverlay(param);
+				   tDay.updateUniform();
 				}
-	
+				
 	            lastTimestamp = coords.y;
+				//console.log("lastTimestamp ",lastTimestamp);
 	
 	        }
 	    });
@@ -966,7 +1117,7 @@ class Days{
 	        }
 	
 	        //default tutti quelli che rimangono
-	        return progress.toFixed(2) * -0.01;
+	        return progress.toFixed(2) * -0.1;
 	
 	    }
 	
@@ -1104,8 +1255,9 @@ function createScene(){
 
 
 	var param = tDay.getParam(lastTimestamp);
-	tDay.update(param);
-	tDay.updateOverlay(position);
+    tDay.updateOverlay(param);
+    tDay.updateUniform();
+
 	
 	window.addEventListener( 'resize', onWindowResize );
 
@@ -1114,7 +1266,7 @@ function createScene(){
 }
 
 function animate() {
-    tDay.update(lastTimestamp);
+    //tDay.update(lastTimestamp);
     render();
     //stats.update();
 }
@@ -1363,6 +1515,7 @@ function parseAnim(gltf,scene){
 
 	Parser.maxDur = maxDur;
 	mixer.setTime ( 80.*maxDur/100.);
+	mixer.timeScale = 0.4;
 }
 
 function loadAsset() {
@@ -1477,6 +1630,15 @@ function loadPointsDistruct(){
 	const color2 = 0x33ff55;
 	
 	loader.load( 'models/gocchaman.obj', function ( object ) {
+        /*
+		const positions = combineBuffer( object, 'position' );
+    
+		createMesh( positions, scene, scale, 0, 0, 0, 0xff7744 );
+		createMesh( positions, scene, scale, 256, 0, depth/5, 0x4477ff );
+		createMesh( positions, scene, scale, 0, 0, depth/3, 0xff7744 );
+		createMesh( positions, scene, scale, 256, 0, depth/2, 0x44ff44 );
+
+		*/
         loadAsset();
 	} );
 
