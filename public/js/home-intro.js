@@ -745,6 +745,7 @@ class Days{
 			'#msg-4' :false,
 			'#msg-0' :false,
 			'#msg-6' :false,
+			'#msg-video' :false,
 		}
         switch (true) {
 	        /* 0 ===> 15:00  */
@@ -800,8 +801,15 @@ class Days{
             /* 46 ===> 24:00  */
             case (e >=56 && e < (coordinateDisplay +56)):
             {
-
-                //break;
+				
+                $('#msg-video').css("display", "block");
+				msgs['#msg-video'] = true;
+				/*
+				document.getElementById('video1').load();
+				document.getElementById('video1').play();
+				
+				*/
+                break;
             }
 				
             /* 56 ===> 3:00  */

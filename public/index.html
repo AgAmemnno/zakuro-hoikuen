@@ -48,7 +48,10 @@
    
     
 
-    
+        <!-- video id="video" loop crossOrigin="anonymous" playsinline style="display:none">
+			<source src="resources/main.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+		</video -->
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     </head>
@@ -166,7 +169,7 @@
                 <use xlink:href="#gentle-wave" x="48" y="5" id="wave3" />
                 <use xlink:href="#gentle-wave" x="48" y="7" id="wave4" />
                 </g>
-            </svg>
+                </svg>
             </div>
         
             <nav id="ModalMenu" class="modal">
@@ -345,7 +348,12 @@
                             <div id="msg-policy2" class="labelDiv" style="Display:none">
                                 <h1 class="anim1"><span class="text-combine">2</span> やさしく素直な子</h1>
                             </div>
-                            
+                            <div id="msg-video" class="labelDiv3" style="Display:none">
+                                <video id="video1" muted autoplay loop poster="img/logo2.png" preload="auto" >
+                                    <source src="resources/main.mp4" type="video/mp4">
+                                    <p>このブラウザは動画再生に対応していません</p>
+                                </video>
+                            </div>
                             <div id="msg-policy3" class="labelDiv" style="Display:none">
                                 <h1 class="anim1"><span class="text-combine">3</span> まじめで熱心な子</h1>
                             </div>
