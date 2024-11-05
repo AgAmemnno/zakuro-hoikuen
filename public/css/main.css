@@ -314,6 +314,107 @@ nav > h1:before {
   margin-left: 20px;
 }
 
+#btn-speed-u {
+  top: 78vh;
+  left: 94vw;
+}
+
+#btn-speed-d {
+  top: 78vh;
+  left: 87vw;
+}
+
+.scene-btn {
+  z-index: 99999;
+  position: absolute;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: radial-gradient(from 50% 60%, white, #f6f6f6);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 -6px 10px rgba(255, 255, 255, 0.6);
+}
+.scene-btn:not(:last-child) {
+  margin-right: 20px;
+}
+.scene-btn.scroll-forward {
+  transition: background-color 0.2s ease;
+}
+.scene-btn:hover {
+  cursor: pointer;
+  /*
+  &.scroll-forward,
+  &.scroll-forward .tooltip,
+  &.scroll-forward .tooltip:after {
+    background-color: rgb(159, 223, 143);
+  }
+  */
+}
+.scene-btn:hover.scroll-forward {
+  background-color: rgba(208, 233, 202, 0.164);
+}
+.scene-btn:hover .tooltip-l {
+  transform: translate(150%, -50%);
+  opacity: 1;
+}
+.scene-btn:hover .tooltip-r {
+  transform: translate(-250%, -50%);
+  opacity: 1;
+}
+.scene-btn:hover .icon {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), white);
+  -webkit-background-clip: text;
+}
+.scene-btn .tooltip {
+  font-size: 10pt;
+  font-weight: 900;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -250%);
+  z-index: -1;
+  opacity: 0;
+  padding: 0.2em 0.4em;
+  transition: 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border-radius: 2px;
+  writing-mode: horizontal-tb;
+}
+.scene-btn .tooltip:after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(45deg);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: -1;
+}
+.scene-btn .icon {
+  height: 1em;
+  display: contents;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: 0.2s ease;
+}
+
+@media (max-width: 780px) {
+  #btn-speed-u {
+    top: 78vh;
+    left: 83vw;
+  }
+  #btn-speed-d {
+    top: 78vh;
+    left: 5vw;
+  }
+}
 .wrapper {
   width: 100%;
   display: flex;
@@ -614,7 +715,7 @@ nav > h1:before {
 }
 /*https://codepen.io/ananyaneogi/pen/Bgozrz*/
 .anim4 {
-  font-size: 7rem;
+  font-size: 5rem;
   line-height: calc(20px + 20vh);
   /*   text-shadow: 0 0 5px #f562ff, 0 0 15px #f562ff, 0 0 25px #f562ff,
       0 0 20px #f562ff, 0 0 30px #890092, 0 0 80px #890092, 0 0 80px #890092;

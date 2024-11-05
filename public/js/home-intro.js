@@ -53,8 +53,14 @@ import { Reflector } from 'three/addons/objects/Reflector.js';
 import { Sky } from 'three/addons/objects/Sky.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
+
+import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper.js';
+import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+
+
 let container, stats, clock, controls,composer;
 let camera, scene, renderer, mixer,loader,model,skeleton;
+var mixerTimeScale = 1.;
 var lastTimestamp =  0;
 var currentTime = 0;
 var numAnimations = 0;
@@ -640,7 +646,7 @@ class Days{
 	updateTimeScale(e,diff){
 		this.timerOn(e);
 		this.timerOff();
-		mixer.update( diff*this.timeScale);
+		mixer.update( diff*this.timeScale*mixerTimeScale);
 	    Parser.update(scene);
 		
 	}
@@ -747,6 +753,8 @@ class Days{
 			'#msg-6' :false,
 			'#msg-video' :false,
 		}
+
+		
         switch (true) {
 	        /* 0 ===> 15:00  */
 	        case (e >85 && e < 91) :
@@ -795,6 +803,9 @@ class Days{
             {
                 $('#msg-4').css("display", "block");
 				msgs['#msg-4'] = true;
+				this.rectLight.intensity = 10;
+				this.touba.visible = true;
+				//this.rectLight
                 break;
             }
 				
@@ -835,7 +846,11 @@ class Days{
                 break;
             }	
         }
-		
+
+		if(!msgs['#msg-4']){
+			this.rectLight.intensity = 0;
+			this.touba.visible = false;
+		}
         for(let k in msgs){
 			if(!msgs[k]){
                 $(k).css("display", "none");
@@ -1131,6 +1146,37 @@ class Days{
 	
 	}
 
+	addLight(scene){
+		const rectLight1 = new THREE.RectAreaLight( 0xeeeeee, 100, 3000, 2000 );
+		rectLight1.position.set(154.873, -2025.62, -13215.3);
+		//rectLight1.rotation.z = Math.PI / 2;
+		scene.add( rectLight1 );
+		this.rectLight = rectLight1;
+	    /*
+		const rectLight2 = new THREE.RectAreaLight( 0xeeeeee, 100,70, 1000 );
+		rectLight2.position.set( 66.4581 , -2025.62, -13215.3  );
+		//rectLight2.rotation.y = Math.PI / 2;
+		scene.add( rectLight2 );
+	
+		const rectLight3 = new THREE.RectAreaLight( 0xeeeeee, 100,70, 1000 );
+		rectLight3.position.set( -19.3427 , -2025.62, -13215.3  );
+		scene.add( rectLight3 );
+	  
+		scene.add( new RectAreaLightHelper( rectLight1 ) );
+		scene.add( new RectAreaLightHelper( rectLight2 ) );
+		scene.add( new RectAreaLightHelper( rectLight3 ) );
+	    */
+	}
+	addTouba(scene){
+		for( let el in scene.children[0].children){
+			var obj = scene.children[0].children[el];
+			if(obj.name  == "touba"){
+				this.touba =  obj;
+				this.touba.visible = false;
+				break;
+			}
+		}
+	}
 }
 
 class Post{
@@ -1219,16 +1265,17 @@ var post   = new Post();
 
 function createScene(){
 	
+	RectAreaLightUniformsLib.init();
     tDay.bindEventListeners();
 
 	if(post.COMP2){
 		scene.add( groupPoints );
 	}
-
-	
 	const light = new THREE.DirectionalLight( 0xffffff, 3 );
 	light.position.set( 1, 1, 1 );
 	scene.add( light );
+	tDay.addLight(scene);
+
 	
 	const planeg = new THREE.PlaneGeometry( 100, 100 );
 	const plane = new Reflector( planeg, {
@@ -1479,7 +1526,7 @@ function parseAnim(gltf,scene){
 	}
 	camera.fov = 20;
 	camera.far = 50000;
-
+    tDay.addTouba(scene);
 	const animations = gltf.animations;
 	mixer = new THREE.AnimationMixer( model );
 
@@ -1571,6 +1618,29 @@ function combineBuffer( model, bufferName ) {
 
 }
 
+
+function pointMaterial(){
+	var uniforms = {
+
+		pointTexture: { value: new THREE.TextureLoader().load( 'img/spark1.png' ) }
+
+	};
+
+	const shaderMaterial = new THREE.ShaderMaterial( {
+
+		uniforms: uniforms,
+		vertexShader: document.getElementById( 'vertexshader' ).textContent,
+		fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+
+		blending: THREE.AdditiveBlending,
+		depthTest: false,
+		transparent: true,
+		vertexColors: true
+
+	} );
+	return  shaderMaterial;
+}
+
 function rondomArch(positions1, positions2, scene, color,color2,N){
 	
 	var depth  = -12209
@@ -1579,17 +1649,22 @@ function rondomArch(positions1, positions2, scene, color,color2,N){
 	var y  =   150;
 	var z  =   0;
 
-
+    var size1 = new Array(positions1.array.length/3);
+	var size2 = new Array(positions2.array.length/3);
+	size1.fill(100);
+	size2.fill(100);
 
 	const geometry = new THREE.BufferGeometry();
 	geometry.setAttribute( 'position', positions1.clone() );
 	geometry.setAttribute( 'initialPosition', positions1.clone() );
-
+    geometry.setAttribute( 'size', new THREE.Float32BufferAttribute( size1, 1 ).setUsage( THREE.DynamicDrawUsage ) );
+	
 	geometry.attributes.position.setUsage( THREE.DynamicDrawUsage );
 	
 	const geometry2 = new THREE.BufferGeometry();
 	geometry2.setAttribute( 'position', positions2.clone() );
 	geometry2.setAttribute( 'initialPosition', positions2.clone() );
+	geometry2.setAttribute( 'size', new THREE.Float32BufferAttribute( size2, 1 ).setUsage( THREE.DynamicDrawUsage ) );
 
 	geometry2.attributes.position.setUsage( THREE.DynamicDrawUsage );
 	
@@ -1597,10 +1672,18 @@ function rondomArch(positions1, positions2, scene, color,color2,N){
 	var mesh = null;
 	var mesh2 = null;
 	var psize = 0.1;
+
+	const shader_mat  = pointMaterial();
+
+
+	const sizes = [];
 	for ( let i = 0; i < N; i ++ ) {
 
-		mesh = new THREE.Points( geometry, new THREE.PointsMaterial( { size: psize, color: color } ) );
-		mesh2 = new THREE.Points( geometry2, new THREE.PointsMaterial( { size: psize *2, color: color2 } ) );
+		//mesh = new THREE.Points( geometry, new THREE.PointsMaterial( { size: psize, color: color } ) );
+		//mesh2 = new THREE.Points( geometry2, new THREE.PointsMaterial( { size: psize *2, color: color2 } ) );
+
+		mesh = new THREE.Points( geometry, shader_mat);
+		mesh2 = new THREE.Points( geometry2, shader_mat );
 		
 		mesh2.scale.x = mesh2.scale.y = mesh2.scale.z =  mesh.scale.x = mesh.scale.y = mesh.scale.z = scale;
         var offset = [ (2*Math.random()-1)*300,  - (2*Math.random()-1)*30,  depth/N*i - (2*Math.random()-1)*20  ];
@@ -1676,4 +1759,18 @@ function init() {
     loader = new GLTFLoader();
     loadPointsDistruct( );
 	
+}
+
+scroll_speed = (ud)=>{
+	if(ud ==1){
+		if(mixer.timeScale < 0.7){
+			mixer.timeScale += 0.05;
+			mixerTimeScale += 0.1;
+		}
+	}else if(ud ==-1){
+		if(mixer.timeScale > 0.05){
+			mixer.timeScale -= 0.05;
+			mixerTimeScale  -= 0.1;
+		}
+	}
 }
