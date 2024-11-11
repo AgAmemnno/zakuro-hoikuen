@@ -1,3 +1,6 @@
+var global_value = 0;
+var aday_toggle = true;
+
 function splitString(str){
     let splittedTextHtml='',generatedHTML='';
     let string = str.textContent;
@@ -78,7 +81,7 @@ const Config = {
 let currentBaseAction = 'idle';
 const allActions = [];
 
-var  GUION = false;
+
 
 var baseActions = {
     idle: { weight: 0 },
@@ -359,11 +362,53 @@ class ObjectParser{
         }
 }
 
-
-
+function scaleTrans(on,name) {
+	var target = document.getElementById(name);
+	if(on){
+		target.classList.remove("display-0");
+		target.classList.remove("scale-0");
+		target.classList.add("scale-on");
+	}else{
+		target.classList.remove("display-0");
+		target.classList.remove("scale-on");
+		target.classList.add("scale-0");
+	}
+}
 
 class Days{
     timeList = [15,17,20,21,24,3,5,9]
+	msgs = {
+		"#msg-start":false,
+		"#msg-0730":false,
+		"#msg-0900":false,
+		"#msg-0930":false,
+		"#msg-1100":false,
+		"#msg-1200":false,
+		"#msg-1400":false,
+		"#msg-1500":false,
+		"#msg-1545":false,
+		"#msg-1600":false,
+		"#msg-1830":false,
+		"#msg-1930":false,
+		"#msg-touba":false,
+		"#img-touba" :false
+	}
+	msgs3 = {
+		"#msg-start3":false,
+		"#msg-07303":false,
+		"#msg-09003":false,
+		"#msg-10003":false,
+		"#msg-11303":false,
+		"#msg-13003":false,
+		"#msg-14303":false,
+		"#msg-15003":false,
+		"#msg-15453":false,
+		"#msg-16003":false,
+		"#msg-18303":false,
+		"#msg-19303":false,
+		"#msg-touba":false,
+		"#img-touba" :false
+	}
     Params = {
         15:{
             rayleigh: 0.214,
@@ -447,24 +492,8 @@ class Days{
 					azimuth: 170,
 					exposure: ipara.exposure
 		};
-
-		if(GUION){ 
-		
-            const gui = new GUI();
-	        
-            //gui.add( effectController, 'turbidity', 0.0, 20.0, 0.1 ).onChange(this.updateUniformGUI);
-            gui.add( effectController, 'rayleigh', 0.0, 4, 0.001 ).onChange(  this.updateUniformGUI);
-            gui.add( effectController, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( this.updateUniformGUI);
-            //gui.add( effectController, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange(  this.updateUniformGUI);
-            gui.add( effectController, 'elevation', 0, 90, 0.1 ).onChange( this.updateUniformGUI);
-            gui.add( effectController, 'azimuth', - 180, 180, 0.1 ).onChange(  this.updateUniformGUI);
-            gui.add( effectController, 'exposure', 0, 1, 0.0001 ).onChange( this.updateUniformGUI);
-			
-            this.gui = gui;
-            this.updateUniformGUI();
-        }else{
-			this.updateUniform();
-	    }
+		this.updateUniform();
+		this.updateOverlay = this.updateOverlay12;
 	}
 
 	createBG(){
@@ -490,62 +519,7 @@ class Days{
 		//console.log("exp ", tDay.renderer.toneMappingExposure);
 	}
 	
-	updateUniformGUI() {
-
-		const uniforms = tDay.sky.material.uniforms;
-		const effectController = tDay.effectController;
-		
-		//uniforms[ 'turbidity' ].value = effectController.turbidity;
-		uniforms[ 'rayleigh' ].value = effectController.rayleigh;
-		uniforms[ 'mieCoefficient' ].value = effectController.mieCoefficient;
-		const theta = THREE.MathUtils.degToRad(effectController.elevation);
-		const phi = THREE.MathUtils.degToRad( 90 - effectController.azimuth);
-		tDay.sun.setFromSphericalCoords( 1,  theta ,phi);
-		uniforms[ 'sunPosition' ].value.copy(tDay.sun );
-		tDay.renderer.toneMappingExposure = effectController.exposure;
-
-	}
 	lastTime = 0;
-	updateGUI(e) {
-	
-	    var VIDEO_INIT = 0,
-	        VIDEO_END = Parser.maxDur*24,
-	        auxTime;
-	
-	    auxTime = currentTime + e;
-	    
-	    Parser.perDur = 100.* (mixer.time / Parser.maxDur);
-		if( (!this.setTime) && ((Parser.perDur % 100.) < 1)){
-			this.lastTime = performance.now();
-			this.setTime = true;
-
-		}else if( this.setTime && (Parser.perDur % 100.) > 99. ){
-			const thisTime = performance.now();
-			const second = (thisTime- this.lastTime)/1000.;
-			this.setTime = false;
-			console.log("time ",second);
-		}
-		//console.log("time duration ",Parser.perDur);
-		
-	    if (auxTime <= VIDEO_END & auxTime >= VIDEO_INIT) {
-			//console.log("time duration auxTime ",auxTime,"  e ",e,"  currenttime",currentTime );
-	        currentTime = auxTime;
-	        var cooD = e;
-	        position =  parseInt(currentTime*10, 10);
-	        mixer.update( cooD*0.1 );
-	        Parser.update(scene);
-	    }else{
-			//console.log("time duration e < 0 auxTime  ",auxTime,"  e ",e,"  currenttime",currentTime );
-		}
-		
-	    if(GUION){
-			this.updateUniformGUI();
-		}else{
-			this.updateUniform();
-		}
-	    //renderer.render(scene, camera);
-	    //startAnimation()
-	}
 	timerStart = false;
 	timerOn(e){
 		if(!this.timerStart){
@@ -650,7 +624,8 @@ class Days{
 	    Parser.update(scene);
 		
 	}
-	updateOverlay(diff){
+	updateOverlay(diff){};
+	updateOverlay12(diff){
 		
 		var VIDEO_INIT = 0,
 		VIDEO_END = Parser.maxDur*24,
@@ -666,6 +641,7 @@ class Days{
 	        currentTime = auxTime;
 			this.updateTimeScale(e,diff);
 	    }else{
+			return;
 			console.error("time duration e < 0 auxTime  ",auxTime,"  e ",e,"  currenttime",currentTime ," diff ",diff);
 		}
 
@@ -740,117 +716,310 @@ class Days{
 				
 
         }
-        const coordinateDisplay = 10;
-		var msgs = {
-			'#msg-policy1' :false,
-			'#msg-policy2' :false,
-			'#msg-policy3' :false,
-			'#msg-policy4' :false,
-			'#msg-2' :false,
-			'#msg-3' :false,
-			'#msg-4' :false,
-			'#msg-0' :false,
-			'#msg-6' :false,
-			'#msg-video' :false,
+        const coordinateDisplay = 5;
+		var msgs = Object.assign({}, this.msgs); 
+        switch (true) {
+			/* 65 ===> start  */
+			case (e >=65 && e < (67)):
+			{
+				$('#msg-start').css("display", "block");
+				msgs['#msg-start'] = true;
+				break;
+			}
+   
+			/* 66 ===> 5:00  */
+			case (e >=70 && e < 75):
+			{
+				$('#msg-0730').css("display", "block");
+				msgs['#msg-0730'] = true;
+				break;
+			}
+			
+			/* 86 ===> 9:00  */
+			case (e >=76 && e < 80):
+			{
+				$('#msg-0900').css("display", "block");
+				msgs['#msg-0900'] = true;
+				break;
+			}	
+
+	        /* 0 ===> 15:00  */
+	        case (e >81 && e < 85) :
+            {
+				$('#msg-0930').css("display", "block");
+				msgs['#msg-0930'] = true;
+				break;
+	        }
+            
+			case (e >86 && e < 91) :
+            {
+				
+				$('#msg-1100').css("display", "block");
+				msgs['#msg-1100'] = true;
+				break;
+	        }
+			case (e >92 && e < 96) :
+            {
+				$('#msg-1200').css("display", "block");
+				msgs['#msg-1200'] = true;
+				break;
+
+	        }		
+		    case (e > 0 && e < 6) :
+            {
+				$('#msg-1400').css("display", "block");
+				msgs['#msg-1400'] = true;
+				break;
+	        }		
+            /* 16 ===> 17:00  */
+            case (e >=6 && e < 12):
+            {
+				$('#msg-1500').css("display", "block");
+				$('#msg-1545').css("display", "block");
+				msgs['#msg-1545'] = true;
+				msgs['#msg-1500'] = true;
+				break;
+            }
+
+            /* 26 ===> 20:00  */
+            case (e >=12 && e < 18):
+            {
+				$('#msg-1600').css("display", "block");
+				msgs['#msg-1600'] = true;
+				break;
+            }
+			
+            /* 46 ===> 24:00  */
+            case (e >=18 && e < 24):
+            {	
+				$('#msg-1830').css("display", "block");
+				msgs['#msg-1830'] = true;
+				break;
+            }
+				
+            case (e >=24 && e < 30):
+            {
+				
+				$('#msg-1930').css("display", "block");
+				msgs['#msg-1930'] = true;
+				break;
+            }
+
+			case (e >=55 && e < 63):
+			{
+				
+				$('#msg-touba').css("display", "block");
+				msgs['#msg-touba'] = true;
+				$('#img-touba').css("display", "block");
+				msgs['#img-touba'] = true;
+				//this.rectLight.intensity = 1.5;
+				//this.touba.visible = true;
+				break;
+			}
+        }
+
+
+        for(let k in msgs){
+			if(!msgs[k]){
+                $(k).css("display", "none");
+            }
+        }
+	}
+	updateOverlay3(diff){
+		
+		var VIDEO_INIT = 0,
+		VIDEO_END = Parser.maxDur*24,
+		auxTime;
+	
+	    auxTime = currentTime + diff;
+	    
+	    Parser.perDur = 100.* (mixer.time / Parser.maxDur);
+		let e = Parser.perDur % 100.;
+		//console.log("time duration diff ",diff);
+	    if((diff > -2.) && (diff < 2.) ){
+			//console.log("time duration auxTime ",auxTime,"  e ",e,"  currenttime",currentTime );
+	        currentTime = auxTime;
+			this.updateTimeScale(e,diff);
+	    }else{
+			return;
+			console.error("time duration e < 0 auxTime  ",auxTime,"  e ",e,"  currenttime",currentTime ," diff ",diff);
 		}
 
-		
+		//console.log(e);
         switch (true) {
 	        /* 0 ===> 15:00  */
-	        case (e >85 && e < 91) :
+	        case (e >0 && e < 26) :
             {
-				$('#msg-policy1').css("display", "block");
-				msgs['#msg-policy1'] = true;
+				//mixer.timeScale = 0.1;
+			    pointsToggle(true);
+                this.updateUniformByTime(15,e/26.);
                 break;
 	        }
             
-			case (e >91 && e < 100) :
-            {
-				$('#msg-policy2').css("display", "block");
-				msgs['#msg-policy2'] = true;
-                break;
-	        }
-			case (e >0 && e < 10) :
-            {
-				$('#msg-policy3').css("display", "block");
-				msgs['#msg-policy3'] = true;
-                break;
-	        }		
-		    case (e >10 && e < 26) :
-            {
-				$('#msg-policy4').css("display", "block");
-				msgs['#msg-policy4'] = true;
-                break;
-	        }		
             /* 16 ===> 17:00  */
-            case (e >=26 && e < (coordinateDisplay +26)):
+            case (e >=26 && e < 36):
             {
-                $('#msg-2').css("display", "block");
-				msgs['#msg-2'] = true;
+				//mixer.timeScale = 0.3;
+				pointsToggle(false);
+                this.updateUniformByTime(17, (e-26)/10.);
                 break;
             }
 
             /* 26 ===> 20:00  */
-            case (e >=36 && e < (coordinateDisplay +36)):
+            case (e >=36 && e < 46): 
             {
-                $('#msg-3').css("display", "block");
-				msgs['#msg-3'] = true;
+                pointsToggle(true);
+                this.updateUniformByTime(20, (e-36)/10.);
                 break;
             }
 				
             /* 36 ===> 21:00  */
-            case (e >=46 && e < (coordinateDisplay +46)):
+            case (e >=46 && e < 56): 
             {
-                $('#msg-4').css("display", "block");
-				msgs['#msg-4'] = true;
-				this.rectLight.intensity = 10;
-				this.touba.visible = true;
-				//this.rectLight
+          
+                pointsToggle(true);
+                this.updateUniformByTime(21, (e-46)/10.);
                 break;
             }
 				
             /* 46 ===> 24:00  */
-            case (e >=56 && e < (coordinateDisplay +56)):
+            case (e >=56 && e < 61): 
             {
-				
-                $('#msg-video').css("display", "block");
-				msgs['#msg-video'] = true;
-				/*
-				document.getElementById('video1').load();
-				document.getElementById('video1').play();
-				
-				*/
+                pointsToggle(true);
+                this.updateUniformByTime(24, (e-56)/5.);
                 break;
             }
 				
             /* 56 ===> 3:00  */
-            case (e >=56 && e < (coordinateDisplay +56)):
+            case (e >=61 && e < 66): 
             {
-
-                //break;
+                pointsToggle(true);
+                this.updateUniformByTime(3, (e-61)/5.);
+                break;
             }
 
             /* 66 ===> 5:00  */
-            case (e >=66 && e < (coordinateDisplay +66)):
+            case (e >=66 && e < 80): 
             {
-                $('#msg-6').css("display", "block");
-				msgs['#msg-6'] = true;
+                pointsToggle(true);
+                this.updateUniformByTime(5, (e-66)/14.);
                 break;
             }
 		   
 			/* 86 ===> 9:00  */
-            case (e >=80 && e < (85)):
+            case (e >=80 && e < 100): 
             {
-                $('#msg-0').css("display", "block");
-				msgs['#msg-0'] = true;
+                pointsToggle(true);
+                this.updateUniformByTime(9, (e-80)/20.);
                 break;
             }	
+				
+
+        }
+        const coordinateDisplay = 5;
+		var msgs = Object.assign({}, this.msgs3); 
+
+        switch (true) {
+			/* 65 ===> start  */
+			case (e >=65 && e < (67)):
+			{
+				$('#msg-start3').css("display", "block");
+				msgs['#msg-start3'] = true;
+				break;
+			}
+   
+			/* 66 ===> 5:00  */
+			case (e >=70 && e < 75):
+			{
+				$('#msg-07303').css("display", "block");
+				msgs['#msg-07303'] = true;
+				break;
+			}
+			
+			/* 86 ===> 9:00  */
+			case (e >=76 && e < 80):
+			{
+				$('#msg-09003').css("display", "block");
+				msgs['#msg-09003'] = true;
+				break;
+			}	
+
+	        /* 0 ===> 15:00  */
+	        case (e >81 && e < 85) :
+            {
+				$('#msg-10003').css("display", "block");
+				msgs['#msg-10003'] = true;
+				break;
+	        }
+            
+			case (e >86 && e < 91) :
+            {
+				
+				$('#msg-11303').css("display", "block");
+				msgs['#msg-11303'] = true;
+				break;
+	        }
+			case (e >92 && e < 96) :
+            {
+				$('#msg-13003').css("display", "block");
+				msgs['#msg-13003'] = true;
+				break;
+
+	        }		
+		    case (e > 0 && e < 6) :
+            {
+				$('#msg-14303').css("display", "block");
+				msgs['#msg-14303'] = true;
+				break;
+	        }		
+            /* 16 ===> 17:00  */
+            case (e >=6 && e < 12):
+            {
+				$('#msg-15003').css("display", "block");
+				$('#msg-15453').css("display", "block");
+				msgs['#msg-15453'] = true;
+				msgs['#msg-15003'] = true;
+				break;
+            }
+
+            /* 26 ===> 20:00  */
+            case (e >=12 && e < 18):
+            {
+				$('#msg-16003').css("display", "block");
+				msgs['#msg-16003'] = true;
+				break;
+            }
+			
+            /* 46 ===> 24:00  */
+            case (e >=18 && e < 24):
+            {	
+				$('#msg-18303').css("display", "block");
+				msgs['#msg-18303'] = true;
+				break;
+            }
+				
+            case (e >=24 && e < 30):
+            {
+				
+				$('#msg-19303').css("display", "block");
+				msgs['#msg-19303'] = true;
+				break;
+            }
+
+			case (e >=55 && e < 63):
+			{
+				
+				$('#msg-touba').css("display", "block");
+				msgs['#msg-touba'] = true;
+				$('#img-touba').css("display", "block");
+				msgs['#img-touba'] = true;
+				//this.rectLight.intensity = 1.5;
+				//this.touba.visible = true;
+				break;
+			}
         }
 
-		if(!msgs['#msg-4']){
-			this.rectLight.intensity = 0;
-			this.touba.visible = false;
-		}
+
         for(let k in msgs){
 			if(!msgs[k]){
                 $(k).css("display", "none");
@@ -936,112 +1105,6 @@ class Days{
 		}		
 		//console.log("T ",T ,"  t ",t );
 	}
-	
-	updateOverlay0(e0){
-	
-	    //console.log('c:'+ e);
-	    let e = Parser.perDur % 100.;
-		//console.log(e);
-	    if(e > 0 && e < 5){
-	
-	        $('.home-container').addClass('visible');
-	    }
-	
-	    if(e > 5){
-	        //console.log('c:'+ c);
-	        $('.home-container').removeClass('visible');
-	    }
-	
-	
-	    if(e < 10){
-	        //console.log('c:'+ c);
-	        $('.message-1').removeClass('visible');
-	    }
-	
-	
-	    if(e >10 && e < 20){
-	        //console.log('c:'+ c);
-			if(e<16){
-				pointsToggle(true);
-			}else{
-				pointsToggle(false);
-			}
-			
-	        $('.message-1').addClass('visible');
-			
-	    }
-	
-	    if(e > 20){
-	        //console.log('c:'+ c);
-	        $('.message-1').removeClass('visible');
-	    }
-	
-	    if(e < 23){
-	        //console.log('c:'+ c);
-	        $('.message-2').removeClass('visible');
-	    }
-	    if(e > 26){
-	       pointsToggle(true);
-	    }
-	    if(e > 30  && e < 40){
-	        //console.log('c:'+ c);
-	        $('.message-2').addClass('visible');
-	
-	    }
-	
-	    if(e > 40){
-	        //console.log('c:'+ c);
-	        $('.message-2').removeClass('visible');
-			
-	    }
-	
-	    if(e < 50){
-	        //console.log('c:'+ c);
-	        $('.message-3').removeClass('visible');
-			
-	    }
-	
-	    if(e > 50 && e < 60){
-	        //console.log('c:'+ c);
-	        $('.message-3').addClass('visible');
-	    }
-	
-	    if(e > 60){
-	        //console.log('c:'+ c);
-	        $('.message-3').removeClass('visible');
-	    }
-	
-	    if(e < 60){
-	        //console.log('c:'+ c);
-	        $('.message-4').removeClass('visible');
-	    }
-	
-	    if(e > 60  && e < 70){
-	        //console.log('c:'+ c);
-	        $('.message-4').addClass('visible');
-			
-	    }
-	
-	    if(e > 70){
-	        //console.log('c:'+ c);
-	        $('.message-4').removeClass('visible');
-	    }
-	
-	    if(e < 80){
-	        //console.log('c:'+ c);
-	        $('.message-5').removeClass('visible');
-	        //$('.message-5').css('z-index', 'auto');
-	    }
-	
-	    if(e > 80){
-			pointsToggle(true);
-	        //console.log('c:'+ c);
-	        $('.message-5').addClass('visible');
-	        //$('.message-5').css('z-index', '3');
-	
-	    }
-	
-	}
 
 	startAnimation() {
 	    if (!requestId && !initialized) {
@@ -1061,31 +1124,30 @@ class Days{
 	        requestId = undefined;
 	    }
 	}
-	
+	listen  = false;
 	bindEventListeners() {
-		
-	    $('#home-intro-scroll-sensor').momentus({
-	      
-	        onChange: function (coords) {
+		if(!this.listen)
+			{
+			this.listen = true;
+			$('#home-intro-scroll-sensor').momentus({
 				
-	            //tDay.stopAnimation();
-	            var progress = (coords.y - lastTimestamp);
+				onChange: function (coords) {
+					
+					var progress = (coords.y - lastTimestamp);
 
-	            var param = tDay.getParam(progress);
-	            
-				if(GUION){
-				   tDay.updateGUI(param);
-	               tDay.updateOverlay0(position);
-				}else{
-				   tDay.updateOverlay(param);
-				   tDay.updateUniform();
+					var param = tDay.getParam(progress);
+					
+
+					tDay.updateOverlay(param);
+					tDay.updateUniform();
+
+					
+					lastTimestamp = coords.y;
+					//console.log("lastTimestamp ",lastTimestamp);
+		
 				}
-				
-	            lastTimestamp = coords.y;
-				//console.log("lastTimestamp ",lastTimestamp);
-	
-	        }
-	    });
+			});
+		}
 	
 	};
     
@@ -1152,20 +1214,6 @@ class Days{
 		//rectLight1.rotation.z = Math.PI / 2;
 		scene.add( rectLight1 );
 		this.rectLight = rectLight1;
-	    /*
-		const rectLight2 = new THREE.RectAreaLight( 0xeeeeee, 100,70, 1000 );
-		rectLight2.position.set( 66.4581 , -2025.62, -13215.3  );
-		//rectLight2.rotation.y = Math.PI / 2;
-		scene.add( rectLight2 );
-	
-		const rectLight3 = new THREE.RectAreaLight( 0xeeeeee, 100,70, 1000 );
-		rectLight3.position.set( -19.3427 , -2025.62, -13215.3  );
-		scene.add( rectLight3 );
-	  
-		scene.add( new RectAreaLightHelper( rectLight1 ) );
-		scene.add( new RectAreaLightHelper( rectLight2 ) );
-		scene.add( new RectAreaLightHelper( rectLight3 ) );
-	    */
 	}
 	addTouba(scene){
 		for( let el in scene.children[0].children){
@@ -1222,25 +1270,6 @@ class Post{
 			
 			this.effectFocus = new ShaderPass( FocusShader );
 
-		    if(GUION){
-				
-				const bloomFolder = tDay.gui.addFolder( 'bloom' );
-				
-				bloomFolder.add( effectController , 'eB_threshold', 0.0, 2.0 ).onChange( function ( value ) {
-					//post.effectBloom.threshold = Number( value );
-					post.effectFocus.uniforms["sampleDistance"].value = value;
-				} );
-				
-				bloomFolder.add( effectController , 'eB_strength', 0.0, 1.0 ).onChange( function ( value ) {
-					post.effectFocus.uniforms["waveFactor"].value = value;
-					//post.effectBloom.srength = Number( value );
-				} );
-				
-				tDay.gui.add( effectController , 'eB_radius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
-					post.effectBloom.radius = Number( value );
-				} );
-			}
-
 		   
 			this.effectFocus.uniforms[ 'screenWidth' ].value = window.innerWidth * window.devicePixelRatio;
 			this.effectFocus.uniforms[ 'screenHeight' ].value = window.innerHeight * window.devicePixelRatio;
@@ -1262,69 +1291,6 @@ var tDay = new Days();
 
 var Parser = new ObjectParser();
 var post   = new Post();
-
-function createScene(){
-	
-	RectAreaLightUniformsLib.init();
-    tDay.bindEventListeners();
-
-	if(post.COMP2){
-		scene.add( groupPoints );
-	}
-	const light = new THREE.DirectionalLight( 0xffffff, 3 );
-	light.position.set( 1, 1, 1 );
-	scene.add( light );
-	tDay.addLight(scene);
-
-	
-	const planeg = new THREE.PlaneGeometry( 100, 100 );
-	const plane = new Reflector( planeg, {
-		clipBias: 0.01,
-		textureWidth: window.innerWidth * window.devicePixelRatio,
-		textureHeight: window.innerHeight * window.devicePixelRatio,
-		color: 0x252525
-	} );
-	plane.position.y = -2025 -100;
-	plane.rotation.x = - Math.PI / 2;
-	plane.scale.set( 1000, 1000, 1000 );
-
-	Config.plane = plane;
-	scene.add( plane );
-
- 
-	renderer = new THREE.WebGLRenderer( { antialias: true } );
-	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.autoClear = false;
-	container.appendChild( renderer.domElement );
-
-
-	
-	stats = new Stats();
-	//container.appendChild( stats.dom );
-
-	tDay.create(scene,renderer);	
-	
-	post.create();
-
-
-
-	var param = tDay.getParam(lastTimestamp);
-    tDay.updateOverlay(param);
-    tDay.updateUniform();
-
-	
-	window.addEventListener( 'resize', onWindowResize );
-
-	renderer.setAnimationLoop( animate );
-	
-}
-
-function animate() {
-    //tDay.update(lastTimestamp);
-    render();
-    //stats.update();
-}
 
 function pointsToggle(ud ){
     
@@ -1467,7 +1433,7 @@ function render() {
 			pointsAnimation();
 		}
 	}else{
-    renderer.render( scene, camera );
+	    renderer.render( scene, camera );
 	}
     //
 }
@@ -1510,7 +1476,7 @@ function parseAnim(gltf,scene){
 	}
 	f(scene.children);
 	
-	scene.children[0].children[14].visible = false;
+	//wscene.children[0].children[14].visible = false;
         
 	Parser.gltf(gltf,scene);
 	
@@ -1569,7 +1535,7 @@ function parseAnim(gltf,scene){
 	}
 
 	Parser.maxDur = maxDur;
-	mixer.setTime ( 80.*maxDur/100.);
+	mixer.setTime ( 65.*maxDur/100.);
 	mixer.timeScale = 0.4;
 }
 
@@ -1617,7 +1583,6 @@ function combineBuffer( model, bufferName ) {
 	return new THREE.BufferAttribute( combined, 3 );
 
 }
-
 
 function pointMaterial(){
 	var uniforms = {
@@ -1746,20 +1711,7 @@ function loadPointsDistruct(){
 
 }
 
-function init() {
-	
-    container = document.createElement('div');
-    document.getElementById('home-intro').appendChild(container);
-    container.id = 'wheel';
-    
-    scene = new THREE.Scene();
 
-    clock = new THREE.Clock();
-    
-    loader = new GLTFLoader();
-    loadPointsDistruct( );
-	
-}
 
 scroll_speed = (ud)=>{
 	if(ud ==1){
@@ -1774,3 +1726,484 @@ scroll_speed = (ud)=>{
 		}
 	}
 }
+
+
+
+change_aday = ()=>{
+
+
+	$('#home-intro-scroll-sensor')[0].scrollTo(0, 0);
+	lastTimestamp =  0;
+    mixer.update( (-mixer.time + 65.*Parser.maxDur/100.)/mixer.timeScale );
+
+	
+	aday_toggle = !aday_toggle; 
+	if(aday_toggle){
+		tDay.updateOverlay = tDay.updateOverlay12;
+	}else{
+		tDay.updateOverlay = tDay.updateOverlay3;
+	}
+
+	for(let k in tDay.msgs3){
+		$(k).css("display", "none");
+	}
+	for(let k in tDay.msgs){
+		$(k).css("display", "none");
+	}
+}  
+
+
+var swiper =null;
+
+function navbtn(){
+    let btn  = document.querySelectorAll('.h-btn');
+    let rem  = (1.4 *16); 
+    let divw= 150/2;
+    let ofs  = [3,5,4,4,6];
+    let  ofs_len = ofs.length;
+    btn.forEach((ele,i)=>{
+        let Width = rem*ofs[i%ofs_len]/2.;
+        ele.children[2].style.marginLeft = `-${divw-28}px`;
+    });
+
+}
+
+
+
+function WindowSize() {
+    if(window.innerWidth > 1250){
+        menu_close();
+    }
+}
+
+window.onresize = WindowSize;
+navbtn();
+
+
+
+
+
+class playMonitor{
+	autoplayOn = false
+	threeEnable = false
+	threeOn = false
+	selectPlay(three){
+		if(three){
+			if(this.autoplayOn){
+				
+				this.AutoPlayClose();
+			}
+			if(this.threeEnable){
+				threePlay(true);
+				this.threeOn = true;
+			}
+			
+		}else if(!this.autoplayOn){
+			this.threeOn = false;
+			this.AutoPlay();
+			
+		}
+	    if(!this.threeOn){
+			if(this.threeEnable){
+				threePlay(false);
+			}
+		}
+	}
+	plyings = [];
+	AutoMain(f,inter,i0,i1){
+		if( this.closeSignal){
+			return;
+		}
+		inter += i0;
+		var interval1 = setInterval(f, inter);
+		//console.log("autoMain stack push ",interval1);
+		pMonitor.plyings.push(interval1);
+		inter += i1;
+		setTimeout(function() {
+			clearInterval(interval1);
+		}, inter);
+		return inter;
+	}
+    closeSignal = false;
+	AutoPlay(){
+		this.autoplayOn = true;
+		var main1 = ()=>{
+			//console.log("main1");
+			$('#msg-0').css("display", "none");
+			$('#msg-policy1').css("display", "block");
+			scaleTrans(true,"o-1");
+		}
+		var main2 = ()=>{
+			//console.log("main2");
+			$('#msg-0').css("display", "none");
+			$('#msg-policy1').css("display", "none");
+			scaleTrans(false,"o-1");
+			$('#msg-policy2').css("display", "block");
+			scaleTrans(true,"o-2");
+		}
+		var main3 = ()=>{
+			//console.log("main3");
+			$('#msg-0').css("display", "none");
+			$('#msg-policy2').css("display", "none");
+			scaleTrans(false,"o-2");
+			$('#msg-policy3').css("display", "block");
+			scaleTrans(true,"o-3");
+		}
+		var main4 = ()=>{
+			//console.log("main4");
+			$('#msg-policy3').css("display", "none");
+			scaleTrans(false,"o-3");
+			$('#msg-policy4').css("display", "block");
+			scaleTrans(true,"o-4");
+		}
+		
+		var main5 = ()=>{
+			//console.log("main5");
+			$('#msg-policy4').css("display", "none");
+			scaleTrans(false,"o-4");
+			$('#msg-video').css("display", "block");
+		}
+		var main0 = ()=>{
+			//console.log("main0");
+			var inter = 0;
+			$('#msg-video').css("display", "none");
+			$('#msg-0').css("display", "block");
+			inter = this.AutoMain(main1,inter,5000,2000);
+			inter = this.AutoMain(main2,inter,2000,2000);
+			inter = this.AutoMain(main3,inter,2000,2000);
+			inter = this.AutoMain(main4,inter,2000,3000);
+			inter = this.AutoMain(main5,inter,2000,15000);
+			inter = this.AutoMain(main0,inter,2000,4000);
+		};
+	    
+		this.closeSignal = false;
+		main0();
+		return; 
+	}
+	AutoPlayClose(){
+		this.autoplayOn = false;
+		scaleTrans(false,"o-1");
+		scaleTrans(false,"o-2");
+		scaleTrans(false,"o-3");
+		scaleTrans(false,"o-4");
+		$('#msg-0').css("display", "none");
+		$('#msg-policy1').css("display", "none");
+		$('#msg-policy2').css("display", "none");
+		$('#msg-policy3').css("display", "none");
+		$('#msg-policy4').css("display", "none");
+		$('#msg-video').css("display", "none");
+		this.closeSignal = true;
+		pMonitor.plyings.forEach((interval)=>{
+			//console.log("close autoMain stack pull ",interval);
+			clearInterval(interval);
+		});
+	    pMonitor.plyings = [];
+	}
+}
+const pMonitor = new playMonitor();
+
+
+function threePlay(on){
+	if(on){
+		var param = tDay.getParam(lastTimestamp);
+	    tDay.updateOverlay(param);
+	    tDay.updateUniform();
+		tDay.bindEventListeners();
+		renderer.setAnimationLoop( render );
+	}else{
+		renderer.setAnimationLoop( null );
+	}
+}
+
+function createScene(){
+	
+	RectAreaLightUniformsLib.init();
+   
+
+	if(post.COMP2){
+		scene.add( groupPoints );
+	}
+	const light = new THREE.DirectionalLight( 0xffffff, 3 );
+	light.position.set( 1, 1, 1 );
+	scene.add( light );
+	//tDay.addLight(scene);
+
+	
+	const planeg = new THREE.PlaneGeometry( 100, 100 );
+	const plane = new Reflector( planeg, {
+		clipBias: 0.01,
+		textureWidth: window.innerWidth * window.devicePixelRatio,
+		textureHeight: window.innerHeight * window.devicePixelRatio,
+		color: 0x252525
+	} );
+	plane.position.y = -2025 -100;
+	plane.rotation.x = - Math.PI / 2;
+	plane.scale.set( 1000, 1000, 1000 );
+
+	Config.plane = plane;
+	scene.add( plane );
+
+ 
+	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.autoClear = false;
+	container.appendChild( renderer.domElement );
+
+
+	
+	stats = new Stats();
+	//container.appendChild( stats.dom );
+
+	tDay.create(scene,renderer);	
+	
+	post.create();
+
+	
+	window.addEventListener( 'resize', onWindowResize );
+
+	
+	renderer.setAnimationLoop( null );
+	pMonitor.threeEnable = true;
+}
+
+function init() {
+
+	pMonitor.selectPlay(false);
+
+    container = document.createElement('div');
+    document.getElementById('home-intro').appendChild(container);
+    container.id = 'wheel';
+    
+    scene = new THREE.Scene();
+
+    clock = new THREE.Clock();
+    
+    loader = new GLTFLoader();
+    loadPointsDistruct( );
+	
+}
+
+
+function home_img_on(on){
+	var imgs = {
+		"o-1" :0,
+		"o-2" :0,
+		"o-3" :0,
+		"o-4" :0,
+	} 
+	var value = "none"
+	if(!on){
+		value = "none";
+		for(let name in imgs){
+			var target = document.getElementById(name);
+			target.classList.remove("scene-on");
+			target.classList.add("display-0");
+		}
+	}
+	
+}
+
+function home_btn(e){
+	e.preventDefault();
+	home_img_on(true);
+	pMonitor.selectPlay(false);
+	swiper.slideTo(5);
+	activateBtn(e);
+}
+
+function ayear_btn(e){
+	e.preventDefault();
+	home_img_on(false);
+	global_value = 2;
+	if(pMonitor.threeEnable){
+		threePlay(false);
+	}
+	pMonitor.AutoPlayClose();
+	swiper.slideTo(4);
+	activateBtn(e);
+}
+
+function aday_btn(e){
+	e.preventDefault();
+	pMonitor.selectPlay(true);
+	global_value = 1;
+	swiper.slideTo(3);
+	activateBtn(e);
+}
+
+
+function info_btn(e){
+	e.preventDefault();
+	swiper.slideTo(1);
+	activateBtn(e);
+}
+function access_btn(e){
+	e.preventDefault();
+	swiper.slideTo(0);
+	activateBtn(e);
+}
+function email_btn(e){
+	e.preventDefault();
+	swiper.slideTo(2);
+	activateBtn(e);
+}
+
+menu_func = (e,name)=>{
+    e.preventDefault();
+    switch(name){
+        case 'home':{
+			home_btn(e);
+            break;
+        }
+		case 'ayear':{
+			ayear_btn(e);
+			break;
+		}
+        case 'aday':{
+            aday_btn(e);
+            break;
+        }
+        case 'info':{
+            info_btn(e);
+            break;
+        }
+        case 'access':{
+            access_btn(e);
+            break;
+        }
+        case 'email':{
+            email_btn(e);
+            break;
+        }
+    }
+    activateBtn(e);
+    menu_close();
+}
+
+
+
+$(document).ready(function () {
+    // Closes the Responsive Menu on Menu Item Click
+        $('.navbar-collapse ul li a').click(function() {
+            if ($(this).attr('class') != 'dropdown-toggle active' && $(this).attr('class') != 'dropdown-toggle') {
+                $('.navbar-toggle:visible').click();
+            }
+        });
+
+		const swiperEl = document.getElementById("sw-con");
+            // swiper parameters
+		const swiperParams = {
+            direction: 'vertical',
+            //loop: true,
+            speed: 800, 
+            //autoplay: {delay: 15000,},
+            noSwipingClass:'swiper-slide-c',
+            freeMode: false,
+            allowTouchMove:false,
+/*
+			breakpoints: {
+			640: {
+				slidesPerView: 2,
+			},
+			1024: {
+				slidesPerView: 3,
+			},
+			},
+			on: {
+			init() {
+				
+			},
+			},
+*/
+		};
+	  
+  
+	  // now we need to assign all parameters to Swiper element
+	  Object.assign(swiperEl, swiperParams);
+	
+	  // and now initialize it
+	  swiperEl.initialize();
+
+	  /*
+		swiper = new Swiper('.myswiper', {
+            direction: 'vertical',
+            loop: true,
+            speed: 800, 
+            //autoplay: {delay: 15000,},
+            noMousewheelClass:'swiper-slide',
+            freeMode: false,
+            allowTouchMove:false,
+
+        });
+		*/
+	   swiper = swiperEl.swiper;
+       swiper.slideTo(5);
+
+        $('#home-btn').on('click', function(e){
+			home_btn(e);
+        });
+
+        $('#ayear-btn').on('click', function(e){
+			ayear_btn(e);
+        });
+
+        $('#aday-btn').on('click', function(e){
+			aday_btn(e);
+        });
+        
+
+        $('#news-btn').on('click', function(e){
+            //console.log(e.target.id);
+            e.preventDefault();
+            swiper.slideTo(1);
+            activateBtn(e);
+        });
+    
+
+        $('#lookbook-btn').on('click', function(e){
+           // console.log(e.target.id);
+            e.preventDefault();
+            swiper.slideTo(0);
+            activateBtn(e);
+        });
+
+
+        $('#contacts-btn').on('click', function(e){
+            e.preventDefault();
+            swiper.slideTo(2);
+            activateBtn(e);
+        });
+    
+
+        $('#lookbook-btn-intro').on('click', function(e){
+            // console.log(e.target.id);
+            e.preventDefault();
+            swiper.slideTo(1);
+            activateBtn(e);
+        });
+
+    
+        $("[data-dismiss='modal']").on('click', function(e){
+            $('.navbar-collapse ul li a').removeClass('active');
+        });
+
+		var swiper3El = document.querySelector(".mySwiper3");
+		Object.assign(swiper3El, {
+		  grabCursor: true,
+		  effect: "creative",
+		  creativeEffect: {
+			prev: {
+			  shadow: true,
+			  translate: ["-20%", 0, -1],
+			},
+			next: {
+			  translate: ["100%", 0, 0],
+			},
+		  },
+		});
+		swiper3El.initialize();
+        
+});
+    
+

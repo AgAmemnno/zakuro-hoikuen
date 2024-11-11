@@ -26,9 +26,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap" rel="stylesheet">
     
     
-    
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+        <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/-->
+        <!--script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script-->
     
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     
@@ -86,7 +86,36 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script>
+        var menu_is_open = false;
+        var change_aday = ()=>{};
         var scroll_speed = (ud)=>{};
+        function activateBtn(e){
+            $('.navbar-collapse ul li a').removeClass('active');
+            $(e.target).addClass('active');
+        }
+        var menu_func = (e,name)=>{
+            console.log(e);
+        };
+        function menu_open(){
+            var modal = document.getElementById("ModalMenu");
+            modal.style.display = "block";
+            var modalopen = document.getElementById("ModalOpen");
+            modalopen.style.display = "none";
+            menu_is_open = true;
+        }
+
+
+        function menu_close(){
+            if( !menu_is_open ){
+                return;
+            }
+            var modal = document.getElementById("ModalMenu");
+            modal.style.display = "none";
+            var modalopen = document.getElementById("ModalOpen");
+            modalopen.style.display = "block";
+            menu_is_open = false;
+        }
+
     </script>
     </head>
     <body style="overflow: hidden">
@@ -109,40 +138,57 @@
                     </button>
                     </div>
                     <div class="navele-s">  
-                    <button class="h-btn" type="button" id="about-btn" title="Home">
-                                    <span id="front-span">一年と一日</span>
-                                    <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">globe_asia</span>
-                                    <svg viewBox="0 0 300 300" aria-hidden="true">
-                                        <g>
-                                        <text fill="currentColor">
-                                            <textPath xlink:href="#circlePath">a day</textPath>
-                                        </text>
-                                        <text fill="currentColor">
-                                            <textPath xlink:href="#circlePath" startOffset="50%">a year</textPath>
-                                        </text>
-                                        </g>
-                                    </svg>
-                    </button>
+	                    <button class="h-btn" type="button" id="aday-btn" title="Home">
+	                                    <span id="front-span">一日</span>
+	                                    <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">globe_asia</span>
+	                                    <svg viewBox="0 0 300 300" aria-hidden="true">
+	                                        <g>
+	                                        <text fill="currentColor">
+	                                            <textPath xlink:href="#circlePath">a day</textPath>
+	                                        </text>
+	                                        <text fill="currentColor">
+	                                            <textPath xlink:href="#circlePath" startOffset="50%">a year</textPath>
+	                                        </text>
+	                                        </g>
+	                                    </svg>
+	                    </button>
                     </div>
                     <div class="navele-s">  
-                    <button class="h-btn" type="button" id="news-btn" title="Home">
-                                    <span id="front-span">お知らせ</span>
-                                    <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">info</span>
-                                    <svg viewBox="0 0 300 300" aria-hidden="true">
-                                        <g>
-                                        <text fill="currentColor">
-                                            <textPath xlink:href="#circlePath">お知らせ</textPath>
-                                        </text>
-                                        <text fill="currentColor">
-                                            <textPath xlink:href="#circlePath" startOffset="50%">News</textPath>
-                                        </text>
-                                        </g>
-                                    </svg>
-                    </button>
+	                    <button class="h-btn" type="button" id="ayear-btn" title="Home">
+	                                    <span id="front-span">一年</span>
+	                                    <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">globe_asia</span>
+	                                    <svg viewBox="0 0 300 300" aria-hidden="true">
+	                                        <g>
+	                                        <text fill="currentColor">
+	                                            <textPath xlink:href="#circlePath">a day</textPath>
+	                                        </text>
+	                                        <text fill="currentColor">
+	                                            <textPath xlink:href="#circlePath" startOffset="50%">a year</textPath>
+	                                        </text>
+	                                        </g>
+	                                    </svg>
+	                    </button>
                     </div>
+
                 </div>
                 <h1 class="title-bg theme-3"><span class="title">さくら保育園</span></h1>
                 <div class="navbar-s navbar-right theme-3">
+					<div class="navele-s">  
+	                    <button class="h-btn" type="button" id="news-btn" title="Home">
+	                                    <span id="front-span">お知らせ</span>
+	                                    <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">info</span>
+	                                    <svg viewBox="0 0 300 300" aria-hidden="true">
+	                                        <g>
+	                                        <text fill="currentColor">
+	                                            <textPath xlink:href="#circlePath">お知らせ</textPath>
+	                                        </text>
+	                                        <text fill="currentColor">
+	                                            <textPath xlink:href="#circlePath" startOffset="50%">News</textPath>
+	                                        </text>
+	                                        </g>
+	                                    </svg>
+	                    </button>
+                    </div>
                     <div class="navele-s">  
                     <button class="h-btn" type="button" id="lookbook-btn" title="Home">
                                     <span id="front-span">アクセス</span>
@@ -227,8 +273,8 @@
                         </button>
                     </div>
                     <div class="navele-s-modal navele-s-menu2">  
-                        <button class="h-btn" type="button" onclick="menu_func(event,'days')" title="a year a day">
-                                        <span id="front-span">一年と一日</span>
+                        <button class="h-btn" type="button" onclick="menu_func(event,'ayear')" title="a year a day">
+                                        <span id="front-span">一年</span>
                                         <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">globe_asia</span>
                                         <svg viewBox="0 0 300 300" aria-hidden="true">
                                             <g>
@@ -243,6 +289,22 @@
                         </button>
                     </div>
                     <div class="navele-s-modal navele-s-menu3">  
+                        <button class="h-btn" type="button" onclick="menu_func(event,'aday')" title="a year a day">
+                                        <span id="front-span">一日</span>
+                                        <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">globe_asia</span>
+                                        <svg viewBox="0 0 300 300" aria-hidden="true">
+                                            <g>
+                                                <text fill="currentColor">
+                                                <textPath xlink:href="#circlePath">a day</textPath>
+                                                </text>
+                                                <text fill="currentColor">
+                                                <textPath xlink:href="#circlePath" startOffset="50%">a year</textPath>
+                                                </text>
+                                            </g>
+                                        </svg>
+                        </button>
+                    </div>
+                    <div class="navele-s-modal navele-s-menu4">  
                         <button class="h-btn" type="button" onclick="menu_func(event,'info')" title= "info" >
                                          <span id="front-span">お知らせ</span>
                                          <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">info</span>
@@ -258,7 +320,7 @@
                                         </svg>
                         </button>
                     </div>
-                    <div class="navele-s-modal navele-s-menu4">  
+                    <div class="navele-s-modal navele-s-menu5">  
                         <button class="h-btn" type="button" onclick="menu_func(event,'access')" title="access">
                                          <span id="front-span">アクセス</span>
                                          <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">scooter</span>
@@ -274,7 +336,7 @@
                                       </svg>
                         </button>
                     </div>
-                    <div class="navele-s-modal navele-s-menu5">  
+                    <div class="navele-s-modal navele-s-menu6">  
                         <button class="h-btn" type="button" onclick="menu_func(event,'email')" title="mail">
                                          <span id="front-span">お問い合わせ</span>
                                          <span class="material-symbols-outlined"  id="back-span" aria-hidden="true">email</span>
@@ -292,16 +354,16 @@
                     </div>
                 </div>
             </nav>
-            <div class="swiper myswiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
+            <swiper-container id="sw-con" class="myswiper">
+                <!-- div class="swiper-wrapper"-->
+                    <swiper-slide class="swiper-slide-c">
                     <div class="map border-deform">
                         <h3 class="border-deform" >アクセス地図</h3>
                         <div id="map">
                             <img src="resources/map.png"  class="img-map border-deform"/>
                         </div>
                         <div class="map-c border-deform">
-                            <img src="resources/tane.png"  class="img-map2"/>
+                            <!-- img src="resources/tane.png"  class="img-map2"/ -->
                             <div class="map-c2 border-deform"  >
                                 <h4 class="det">〒331-0821<br> さいたま市北区別所町98-6</h4>
                                 <h4 class="det">TEL:048-664-5054</h4>
@@ -310,20 +372,20 @@
                             </div>
                         </div>
                     </div>
-                    </div>
-                    <div class="swiper-slide">
-                    <div class="newspanel border-deform">
+                    </swiper-slide>
+                    <swiper-slide class="swiper-slide-c">
+	                    <div class="newspanel border-deform">
                         <div class="newspanel2 border-deform">
                         <div id="newspanel">
                         <ul class="news-list">
                             <li class="item">
                                 <a href="#">
-                                    <p class="date">2020/4/15</p>
+                                    <p class="date">2024/11/11</p>
                                     <p class="category"><span>お知らせ</span></p>
-                                    <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
+                                    <p class="title">新しくHomePageを公開しました。順次アップデートしていきます。</p>
                                 </a>
                             </li>
-                            <li class="item">
+                            <!-- li class="item">
                                 <a href="#">
                                     <p class="date">2020/4/15</p>
                                     <p class="category"><span>お知らせ</span></p>
@@ -336,13 +398,13 @@
                                     <p class="category"><span>お知らせ</span></p>
                                     <p class="title">ここにお知らせが入りますここにお知らせが入りますここにお知らせが入ります</p>
                                 </a>
-                            </li>
+                            </li-->
                         </ul>
                         </div>
                     </div>
                     </div>
-                    </div>
-                    <div class="swiper-slide">
+                    </swiper-slide>
+                    <swiper-slide class="swiper-slide-c">
                     <div class="chat">
                         <div class="chat-title">
                         <figure class="avatar">
@@ -361,14 +423,20 @@
                         </div>
 
                     </div>
-
-                    </div>
-                    <div class="swiper-slide" id="slide-canv">
+                    </swiper-slide>
+                    <swiper-slide class="swiper-slide-c" id="slide-canv">
                             <div id="home-intro-scroll-sensor"></div>
                             
                             <div id="home-intro">
                             </div>
-                            
+
+                            <div class="scene-btn change_aday" id="btn-change-aday" onclick="change_aday();">
+                                <div class="tooltip tooltip-t">三歳児以上</div>
+                                <div class="icon">
+                                  <i class="fa-solid fa-baby fa-lg" style="color: #f6b2b2;"></i>
+                                  <!--i class="fa-brands fa-tiktok"></i -->
+                                </div>
+                            </div>
                             <div class="scene-btn scroll-forward" id="btn-speed-u" onclick="scroll_speed(1);">
                                 <div class="tooltip tooltip-r">スワイプ速く</div>
                                 <div class="icon">
@@ -384,58 +452,424 @@
                                 </div>
                             </div>
 
-                            <div class="lightbox" id="msg-0" style="Display:none">
-                            <span style="background-image: url('./img/kyoukai.png')"></span>
-                            <p class="anim5">大宮さくら保育園</p>
+                            
+                            <div id="msg-start" class="labelDiv-c" style="Display:none">
+                                <h1 class="anim1-light1">保育園の一日（一・二歳児）</h1>
+                                <div id="msg-scroldown">
+                                    <div id="msg-scroldown-inner">
+                                        <div id="scroll-down">
+                                            <span class="arrow-down"></span>
+                                            <span id="scroll-title">スクロール　してください</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div id="msg-policy1" class="labelDiv" style="Display:none">
-                                <h1 class="anim1"><span class="text-combine">1</span> あかるく元気な子</h1>
-                            </div>
-
-                            <div id="msg-policy2" class="labelDiv" style="Display:none">
-                                <h1 class="anim1"><span class="text-combine">2</span> やさしく素直な子</h1>
-                            </div>
-                            <div id="msg-video" class="labelDiv3" style="Display:none">
-                                <video id="video1" muted autoplay loop poster="img/logo2.png" preload="auto" >
-                                    <source src="resources/main.mp4" type="video/mp4">
-                                    <p>このブラウザは動画再生に対応していません</p>
-                                </video>
-                            </div>
-                            <div id="msg-policy3" class="labelDiv" style="Display:none">
-                                <h1 class="anim1"><span class="text-combine">3</span> まじめで熱心な子</h1>
+                            <div id="msg-0730" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">7:30</span>開園。</br>順次登園、自由遊び（合同保育）</h1>
                             </div>
                             
-                            <div id="msg-policy4" class="labelDiv2" style="Display:none">
-                                <h1 class="anim1" id="anim1-add">この3点の保育目標のもと、小学校入学までに必要な、</h1>
-                                </br>
-                                <h1 class="anim1"  id="anim1-add">知育、体力、情操教育を家庭と連携しながら取り組むことで,</h1>
-                                </br>
-                                <h1 class="anim1"  id="anim1-add">子どもは基本的な生活習慣を身につけます。</h1>
-                            </div>
-                        
-                            <div id="msg-1" class="labelDiv" style="Display:none">
-                                <h1 class="anim1"><span class="text-combine">3</span>時のおやつは、とらや</h1>
+                            <div id="msg-0900" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">9:00</span>各クラスに移動、午前のおやつ</h1>
                             </div>
 
-                            <div id="msg-2" class="labelDiv" style="Display:none">
-                            <p class="anim2">夕焼けニャンニャン、また明日</p>
+                            <div id="msg-0930" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">9:30</span>主活動</br>（お絵描き、製作、戸外遊び、室内遊び）</h1>
+                            </div>
+
+                            <div id="msg-1100" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">11:00</span>給食</h1>
+                            </div>
+
+                            <div id="msg-1200" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">12:00</span>午睡（お昼寝）</h1>
+                            </div>
+
+                            <div id="msg-1400" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">14:30</span>おやつ</h1>
+                            </div>
+
+                            <div id="msg-1500" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">15:00</span>自由遊び</h1>
+                            </div>
+                            
+                            <div id="msg-1545" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"></br><span class="text-combine">15:45</span>帰りの会</br>（帰りの準備、歌、挨拶）</h1>
+                            </div>
+
+                            <div id="msg-1600" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">16:00</span>順次降園（合同保育）</h1>
+                            </div>
+
+                            <div id="msg-1830" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">18:30</span>延長保育、おやつ</h1>
+                            </div>
+
+                            <div id="msg-1930" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">19:30</span>閉園</h1>
+                            </div>
+
+                            <div id="msg-start3" class="labelDiv-c" style="Display:none">
+                                <h1 class="anim1-light1">保育園の一日（三歳児以上）</h1>
+                                <div id="msg-scroldown">
+                                    <div id="msg-scroldown-inner">
+                                        <div id="scroll-down">
+                                            <span class="arrow-down"></span>
+                                            <span id="scroll-title">スクロール　してください</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="msg-07303" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">7:30</span>開園。</br>順次登園、自由遊び（合同保育）</h1>
+                            </div>
+                            
+                            <div id="msg-09003" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">9:00</span>自由遊び（ブロック）</h1>
+                            </div>
+
+                            <div id="msg-10003" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">10:00</span>各クラスに移動</br>朝の会（挨拶、歌など
+                                </br>主活動（お絵描き、制作、シール貼り</br>戸外遊び、室内遊びなど</h1>
+                            </div>
+
+                            <div id="msg-11303" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">11:30</span>給食</h1>
+                            </div>
+
+                            <div id="msg-13003" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">12:00</span>外遊び</h1>
+                            </div>
+
+                            <div id="msg-14303" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">14:30</span>おやつ</h1>
+                            </div>
+
+                            <div id="msg-15003" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">15:00</span>クラス活動</h1>
+                            </div>
+                            
+                            <div id="msg-15453" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"></br><span class="text-combine">15:45</span>帰りの会</br>（帰りの準備、歌、挨拶）</h1>
+                            </div>
+
+                            <div id="msg-16003" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">16:00</span>順次降園（合同保育）</h1>
+                            </div>
+
+                            <div id="msg-18303" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">18:30</span>延長保育、おやつ</h1>
+                            </div>
+
+                            <div id="msg-19303" class="labelDiv" style="Display:none">
+                                <h1 class="anim1-light1"><span class="text-combine">19:30</span>閉園</h1>
                             </div>
                             <div id="msg-3" class="labelDiv" style="Display:none">
                             <p class="split-text anim3">YoruNo藤Dana</p>
                             </div>
-                            <div id="msg-4" class="labelDiv" style="Display:none">
-                            <p class="anim4">鎌倉時代の阿弥陀堂があります。</p>
+                            <div id="msg-touba" class="labelDiv" style="Display:none">
+                            <p class="anim2">鎌倉時代の阿弥陀堂があります。</p>
                             </div>
-                            <div id="msg-5" class="labelDiv" style="Display:none">夜明け</div>
-                            
-                            <div id="msg-6" class="labelDiv" style="Display:none"> 
-                            　<h1 class="anim1">７時に登園します。おはよう。</h1>
+                            <div id="img-touba" style="Display:none">
+                                <img
+                                class="kenburns-right"
+                                src="img/touba.jpeg"
+                                alt="外観：園舎" />
                             </div>
-                    </div>
-                </div> 
+
+                    </swiper-slide>
+                    <swiper-slide class="swiper-slide-c">
+                        <div class="ayear">
+                            <div class="ayear-bg"></div>
+                            <!--h1 class="ayear-title">年間行事</h1--> 
+                            <div class="ayear-timeline">
+                                <li class="ayear-timeframe flip" style="grid-area:n1;">
+
+                                    <div class="flip-inner">
+                                        <img
+                                            class="inner-img"
+                                            id="i-1"
+                                            src="img/inner_1.jpeg"
+                                            alt="内観：教室１" />
+                                        <img
+                                            class="inner-img-flip"
+                                            id="i-2"
+                                            src="img/inner_2.jpeg"
+                                            alt="内観：花まつり" />
+                                    </div>
+
+                                </li>
+                                <li class="ayear-timeframe flip" style="grid-area:n2;">
+
+                                    <div class="flip-inner">
+                                        <img
+                                            class="inner-img"
+                                            id="i-3"
+                                            src="img/inner_3.jpeg"
+                                            alt="内観：教室１" />
+                                        <img
+                                            class="inner-img-flip"
+                                            id="i-4"
+                                            src="img/inner_4.jpeg"
+                                            alt="内観：運動会" />
+                                    </div>
+
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m4;">
+                                    <div class="container-fluid">4月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">入園式</p>
+                                    </div>
+                                </li>
+
+                                
+                                <li class="ayear-timeframe" style="grid-area:m5;">
+                                    <div class="container-fluid">5月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">花まつり</p>
+                                    </div>
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m6;">
+                                    <div class="container-fluid">6月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">親子遠足</p>
+                                        <p class="category card-text text-center">虫歯予防デー</p>
+                                    </div>
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m7;">
+                                    <div class="container-fluid">7月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">第一保育期終了</p>
+                                        <p class="category card-text text-center">夕涼み会</p>
+                                    </div>
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m9;">
+                                    <div class="container-fluid">9月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">第２保育期開始</p>
+                                    </div>
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m10;">
+                                    <div class="container-fluid">10月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">運動会</p>
+                                        <p class="category card-text text-center">歩き遠足</p>
+                                    </div>
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m12;">
+                                    <div class="container-fluid">12月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">クリスマス会</p>
+                                        <p class="category card-text text-center">第２保育期終了</p>
+                                    </div>
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m1;">
+                                    <div class="container-fluid">1月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">第３保育期開始</p>
+                                    </div>
+                                </li>
+                                <li class="ayear-timeframe" style="grid-area:m3;">
+                                    <div class="container-fluid">3月</div>
+                                    <div class="card-body">
+                                        <div class="stroke-divider"></div> 
+                                        <p class="category card-text text-center">お遊戯会</p>
+                                        <p class="category card-text text-center">卒園式</p>
+                                    </div>
+                                </li>
+                          
+                            </div>
+                        </div>
+                        
+                        <swiper-container init="false" class="mySwiper3">
+                            <swiper-slide class="small-slide">
+                                <div class="ayear-small">
+                                    <div class="ayear-bg"></div>
+                                    <!--h1 class="ayear-title">年間行事</h1--> 
+                                    <div class="ayear-timeline1">
+                                        <li class="ayear-timeframe" style="grid-area:m4;">
+                                            <div class="container-fluid">4月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">入園式</p>
+                                            </div>
+                                        </li>
+                                        <li class="ayear-timeframe" style="grid-area:m5;">
+                                            <div class="container-fluid">5月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">花まつり</p>
+                                            </div>
+                                        </li>
+                                        <li class="ayear-timeframe" style="grid-area:m6;">
+                                            <div class="container-fluid">6月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">親子遠足</p>
+                                                <p class="category card-text text-center">虫歯予防デー</p>
+                                            </div>
+                                        </li>
+                                        <li class="ayear-timeframe" style="grid-area:m7;">
+                                            <div class="container-fluid">7月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">第一保育期終了</p>
+                                                <p class="category card-text text-center">夕涼み会</p>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </div>
+                            </swiper-slide>
+                            <swiper-slide class="small-slide">
+                                <div class="ayear-small">
+                                    <div class="ayear-bg"></div>
+                                    <!--h1 class="ayear-title">年間行事</h1--> 
+                                    <div class="ayear-timeline2">
+                                        <li class="ayear-timeframe flip" style="grid-area:n2;">
+        
+                                            <div class="flip-inner">
+                                                <img
+                                                    class="inner-img"
+                                                    id="i-3"
+                                                    src="img/inner_3.jpeg"
+                                                    alt="内観：教室１" />
+                                                <img
+                                                    class="inner-img-flip"
+                                                    id="i-4"
+                                                    src="img/inner_4.jpeg"
+                                                    alt="内観：運動会" />
+                                            </div>
+        
+                                        </li>
+                                 
+                                        <li class="ayear-timeframe" style="grid-area:m9;">
+                                            <div class="container-fluid">9月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">第２保育期開始</p>
+                                            </div>
+                                        </li>
+                                        <li class="ayear-timeframe" style="grid-area:m10;">
+                                            <div class="container-fluid">10月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">運動会</p>
+                                                <p class="category card-text text-center">歩き遠足</p>
+                                            </div>
+                                        </li>
+                                        <li class="ayear-timeframe" style="grid-area:m12;">
+                                            <div class="container-fluid">12月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">クリスマス会</p>
+                                                <p class="category card-text text-center">第２保育期終了</p>
+                                            </div>
+                                        </li>                                  
+                                    </div>
+                                </div>
+                            </swiper-slide>
+                            <swiper-slide class="small-slide">
+                                <div class="ayear-small">
+                                    <div class="ayear-bg"></div>
+                                    <!--h1 class="ayear-title">年間行事</h1--> 
+                                    <div class="ayear-timeline3">
+                                        <li class="ayear-timeframe flip" style="grid-area:n1;">
+        
+                                            <div class="flip-inner">
+                                                <img
+                                                    class="inner-img"
+                                                    id="i-1"
+                                                    src="img/inner_1.jpeg"
+                                                    alt="内観：教室１" />
+                                                <img
+                                                    class="inner-img-flip"
+                                                    id="i-2"
+                                                    src="img/inner_2.jpeg"
+                                                    alt="内観：花まつり" />
+                                            </div>
+        
+                                        </li>
+                                        <li class="ayear-timeframe" style="grid-area:m1;">
+                                            <div class="container-fluid">1月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">第３保育期開始</p>
+                                            </div>
+                                        </li>
+                                        <li class="ayear-timeframe" style="grid-area:m3;">
+                                            <div class="container-fluid">3月</div>
+                                            <div class="card-body">
+                                                <div class="stroke-divider"></div> 
+                                                <p class="category card-text text-center">お遊戯会</p>
+                                                <p class="category card-text text-center">卒園式</p>
+                                            </div>
+                                        </li>
+                                  
+                                    </div>
+                                </div>
+                            </swiper-slide>
+                        </swiper-container>     
+                     
+                    </swiper-slide>
+                    <swiper-slide class="swiper-slide-c">
+                        <div class="lightbox" id="msg-0" style="Display:none">
+                            <span style="background-image: url('./img/kyoukai.png')"></span>
+                            <p class="anim5">大宮さくら保育園</p>
+                        </div>
+                        <!-- 外観、内観のimages  -->
+                        <img
+                        class="scene-img"
+                        id="o-1"
+                        src="img/outer_1.jpg"
+                        alt="外観：桜の木" />
+                        <img
+                        class="scene-img"
+                        id="o-2"
+                        src="img/outer_2.jpg"
+                        alt="外観：園舎" />
+                        <img
+                        class="scene-img"
+                        id="o-3"
+                        src="img/outer_3.jpg"
+                        alt="外観：門" />
+                        <img
+                        class="scene-img"
+                        id="o-4"
+                        src="img/outer_4.jpg"
+                        alt="外観：遊具" />
+                        <div id="msg-policy1" class="labelDiv0" style="Display:none">
+                            <h1 class="anim1"><span class="text-combine">1</span> あかるく元気な子</h1>
+                        </div>
+
+                        <div id="msg-policy2" class="labelDiv0" style="Display:none">
+                            <h1 class="anim1"><span class="text-combine">2</span> やさしく素直な子</h1>
+                        </div>
+                        <div id="msg-video" class="labelDiv3" style="Display:none">
+                            <video id="video1" muted autoplay loop poster="img/logo2.png" preload="auto" >
+                                <source src="resources/main.mp4" type="video/mp4">
+                                <p>このブラウザは動画再生に対応していません</p>
+                            </video>
+                        </div>
+                        <div id="msg-policy3" class="labelDiv0" style="Display:none">
+                            <h1 class="anim1"><span class="text-combine">3</span> まじめで熱心な子</h1>
+                        </div>
+                        
+                        <div id="msg-policy4" class="labelDiv2" style="Display:none">
+                            <h1 class="anim1" id="anim1-add">この3点の保育目標のもと、小学校入学までに必要な,</br> 知育、体力、情操教育を家庭と連携しながら取り組むことで,</br>子どもは基本的な生活習慣を身につけます.</h1>
+                        </div>
+                    </swiper-slide>
+			    <!--/div --> 
                 <div class="swiper-pagination"></div>
-            </div> 
+            </swiper-container> 
             <div class="footer">
                 <svg
                 class="waves2"
@@ -462,21 +896,17 @@
                     <small id="cr">© Tiresimas Co. Ltd. 2024</small>
                 </div>
             </div>
-    <script src="https://kit.fontawesome.com/61d5eeebab.js" crossorigin="anonymous"></script>
-    <script src="js/easing.js"></script>
-    <script src="js/inertiaScroll.js"></script>
-    <script src="js/rdc.js"></script>
-
-    <script  type="module" src="js/home-intro.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script src="js/testbot.js"></script>
-
-
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" width="0" height="0">
-        <defs>
-            <path id="circlePath" d="M 150, 150 m -50, 0 a 50,50 0 0,1 100,0 a 50,50 0 0,1 -100,0" />
-        </defs>
-    </svg>
+		    <script src="https://kit.fontawesome.com/61d5eeebab.js" crossorigin="anonymous"></script>
+		    <script src="js/easing.js"></script>
+		    <script src="js/inertiaScroll.js"></script>
+		    <script type="module" src="js/home-intro.js"></script>
+            <!--script src="js/rdc.js"></script-->
+		    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+		    <script src="js/testbot.js"></script>
+		    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" width="0" height="0">
+		        <defs>
+		            <path id="circlePath" d="M 150, 150 m -50, 0 a 50,50 0 0,1 100,0 a 50,50 0 0,1 -100,0" />
+		        </defs>
+		    </svg>
     </body>
 </html>
