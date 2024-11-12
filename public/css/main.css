@@ -890,7 +890,7 @@ swiper-container-no-flexbox .swiper-slide-c {
     font-size: 1.4rem;
   }
   .anim5 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     top: -15%;
     left: 10%;
   }
@@ -1083,7 +1083,6 @@ img {
   padding: 15px;
   box-shadow: 0 0 40px -10px black;
   background-color: #ddd6f3;
-  height: auto;
 }
 
 h3.border-deform {
@@ -1401,7 +1400,7 @@ a {
 }
 .messages .message .timestamp {
   position: absolute;
-  font-size: 1rem;
+  font-size: 0.7rem;
   color: #9a1009;
   padding-top: inherit;
 }
@@ -1715,18 +1714,18 @@ p {
     margin: 1vh auto auto auto;
   }
   .chat-title h2 {
-    font-size: 0.7rem;
+    font-size: 0.5rem;
   }
   .chat-title h3 {
-    font-size: 1rem;
+    font-size: 0.7rem;
     font-weight: bold;
   }
   h2 {
-    font-size: 1rem;
+    font-size: 0.7rem;
     font-weight: bold;
   }
   .messages .message {
-    font-size: 1rem;
+    font-size: 0.7rem;
     font-weight: bold;
   }
   label {

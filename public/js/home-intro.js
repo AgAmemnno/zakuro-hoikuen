@@ -1131,8 +1131,8 @@ class Days{
 			this.listen = true;
 			$('#home-intro-scroll-sensor').momentus({
 				
-				onChange: function (coords) {
-					
+				onChange: function (coords,vel) {
+					//console.log(vel);
 					var progress = (coords.y - lastTimestamp);
 
 					var param = tDay.getParam(progress);
