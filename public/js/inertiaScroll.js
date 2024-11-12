@@ -2,7 +2,7 @@ jQuery.fn.momentus = function(cfg){
 
     /******** Initialize *****************/
     var now = Date.now || function(){return (new Date()).valueOf()},
-        start_point = {x: 0, y: 0},
+        start_point = {x: 0, y: 100},
         last_point = {x: 0, y: 0},
         current_coords = {x: 0, y: 0},
         last_coords = {x: 0, y: 0},
@@ -60,7 +60,7 @@ jQuery.fn.momentus = function(cfg){
         return {x: vel_x, y: vel_y};
     }
 
-
+    
     $(this).on('mousedown touchstart', function(e){
 
         e.preventDefault();
@@ -76,9 +76,9 @@ jQuery.fn.momentus = function(cfg){
             var vel = calculateVelocity(e);
             last_time = now();
             var x = e.pageX || e.originalEvent.touches[0].pageX,
-                y = e.pageY || e.originalEvent.touches[0].pageY,
+                y = (e.pageY || e.originalEvent.touches[0].pageY)*3.,
                 delta_x = x - start_point.x,
-                delta_y = y - start_point.y;
+                delta_y = -(y - start_point.y);
             last_point = start_point;
             start_point = {x: x, y: y};
             last_coords.x = delta_x;
@@ -147,5 +147,3 @@ jQuery.fn.momentus = function(cfg){
     })();
     return this;
 }
-
-
