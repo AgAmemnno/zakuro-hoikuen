@@ -4,7 +4,7 @@ var $messages = $(".messages-content"),
   m;
 var global_i = 0;
 var global_msg = "";
-console.log(273618273186, $messages);
+
 
 $(window).load(function () {
   $messages.mCustomScrollbar();
@@ -20,10 +20,10 @@ $(window).load(function () {
 });
 
 function updateScrollbar() {
-  $messages.mCustomScrollbar("update").mCustomScrollbar("scrollTo", "bottom", {
-    //scrollInertia: 10,
-    timeout: 0
-  });
+  $messages.mCustomScrollbar("update");
+  setTimeout(function(){
+        $messages.mCustomScrollbar("scrollTo","bottom");
+    },1000);
 }
 
 function setDate() {
@@ -49,19 +49,22 @@ function insertMessage() {
   updateScrollbar();
   setTimeout(function () {
     fakeMessage();
-  }, 1000 + Math.random() * 20 * 100);
+  }, 10 + Math.random() * 20);
 }
 
 $(".message-submit").click(function () {
   insertMessage();
 });
-$(".message-reset").click(function () {
+function resetALL(){
     global_msg = "";
     global_i = 0;
     $(".message").each( function() {
         $(this).remove();
     });
     fakeMessage();
+}
+$(".message-reset").click(function () {
+  resetALL();
 });
 
 $(window).on("keydown", function (e) {
@@ -103,60 +106,68 @@ var questions = [
     }, 
     {
         id      :    -1,
-        question:    "ここでは、お答えできません。連絡してね。",
+        question:    "ご質問内容を、メールか電話でお問い合わせください。",
         selector:    ["Mail","Tel"],
-        comments:    ["mailを作成します。","お電話での問い合わせは午前１０時ちょうどにしてください。"],
+        comments:    ["mailを作成します。","電話番号は048-664-5054です。"],
         distination: []
     }, 
     {
         id      :    0,
         question:    "質問グループを選択してください.",
-        selector:    ["園内", "就職", "Page","その他"],
+        selector:    ["園内", "就職", "Page"],
         comments:    ["保育園の日常業務に関すること","保育士採用情報","バグや不具合など",""],
-        distination: [1, 2, 3, -1]
+        distination: [1, 2, 3]
     }, 
     {
         id      :    1,
         question:    "保育園のどのようなことですか？",
-        selector:    ["行事","生活","進路"],
+        selector:    ["欠席","災害対策","虐待防止","給食"],
         comments:    ["年中行事に関すること","給食など","小学校に関すること"],
-        distination: [4, 5, 6]
+        distination: [4, 5, 6,7]
     }, 
+    {
+      id      :    4,
+      question:    "欠席に関しては、朝１０時までに電話で園にお知らせください。",
+      selector:    ["さらに、ご質問がある方","リセット"],
+      comments:    [],
+      distination: [-1,-100]
+  　}, 
+    {
+      id      :    5,
+      question:    "災害対策として、月に一度避難訓練を実施しています。</br>また、避難所は園のお庭となっておりますが、状況によっては、別所公園に避難します。",
+      selector:    ["さらに、ご質問がある方","リセット"],
+      comments:    [],
+      distination: [-1,-100]
+  　}, 
+    {
+      id      :    6,
+      question:    "虐待防止対策は、さいたま市の方針に沿って、当園のマニュアルが作成されています。</br>詳細に関しては、直接ご質問ください。",
+      selector:    ["さらに、ご質問がある方","リセット"],
+      comments:    [],
+      distination: [-1,-100]
+  　}, 
+    {
+      id      :    7,
+      question:    "アレルギーをお持ちの方は、医師の診断書と共に報告してください。</br>給食は別途アレルギーに応じて、ご用意いたします。",
+      selector:    ["さらに、ご質問がある方","リセット"],
+      comments:    [],
+      distination: [-1,-100]
+  　}, 
     {
         id      :    2,
-        question:    "うんこのことですか？",
-        selector:    ["保育士","給食","習い事"],
-        comments:    ["保育士採用に関すること","栄養士採用に関すること","保育園で習い事を行いたい方"],
-        distination: [7, 8, 9]
+        question:    "保育士の募集は、現在行っておりません。</br>随時、募集を行いますので、ご検討ください。",
+        selector:    ["さらに、ご質問がある方","リセット"],
+        comments:    [],
+        distination: [-1,-100]
     }, 
+
     {
         id      :    3,
-        question:    "おかしな動きがありましたか？",
-        selector:    ["Design","Animation","Vulnerability"],
-        comments:    ["デザインに関すること","動作に関すること","脆弱性に関すること"],
-        distination: [10, 11, 12]
-    }, 
-    {
-        id      :    4,
-        question:    "行事について",
-        selector:    ["春","夏","秋","冬"],
-        comments:    ["笑い門","ドラえもん","どざえもん","もんもん"],
-        distination: [-1,-2,-1,-1]
-    }, 
-    {
-        id      :    5,
-        question:    "生活のどんなことですか？",
-        selector:    ["給食","自殺","恋愛"],
-        comments:    ["もりもりたべなさい。","まだ死ぬことはないでしょう。","色気づくには早すぎます。"],
-        distination: [-2, -1, -1]
-    }, 
-    {
-        id      :    6,
-        question:    "いまから進路の悩みですか？",
-        selector:    ["小学校","中学校","高校","大学","政治家に立候補","野球界"],
-        comments:    ["近所に行きましょう。","となりの中学校にはいかないように","少し遠くに行くでしょう","聖学院があります","立憲民主党にだまされるな","西武は消えてなくなるのか。"],
-        distination: [-2, -2, -2,-2,-2,-2]
-    }, 
+        question:    "このページに関する不具合がございましたら、</br>保育園とは別に以下のいずれかからご報告願います。",
+        selector:    ["Github","Mail"],
+        comments:    ["直接コードを修正したい時","内容についてのご相談"],
+        distination: [-200,-300]
+    }
 
 ];
 function getQu(i){
@@ -182,10 +193,19 @@ function createQuestionElement(index) {
 }
   
 
-function radioClick(i,index){
+function radioClick(i,index,name){
+    var el = document.getElementsByName(`${name}`);
+    for(let j =0 ; j< el.length; j++){
+        el[j].disabled = true;
+    }
+    var next_i = getQu(index).distination[i];
+    if(next_i == -100){
+      resetALL();
+      return;
+    }
     var info = getQu(index);
     global_msg += `${info.question}：：${info.selector[i]} <br>`;
-    global_i = getQu(index).distination[i];
+    global_i = next_i;
     fakeMessage();
 }
 // Creates a list of the answer choices as radio inputs
@@ -210,8 +230,16 @@ function createRadios(radioList,index) {
             }else{
                 input = `<label for="${ID}"><h2>${title}</h2><p>${q.comments[i]}</p></label>`;
             }
-        }else{
-            input = `<input type="radio" id="${ID}" name="select${index}" value=${i} onclick="radioClick(${i},${index})" />`;
+        }else if(index==3){
+            input = `<input type="radio" id="${ID}" name="select${index}" value=${i}" />`;
+            if(i==0){
+              input = `<label for="${ID}"><h2>${title}</h2><p><a href="https://github.com/AgAmemnno/zakuro-hoikuen">link</a></p></label>`;
+            }else if(i ==1){
+              input = `<label for="${ID}"><h2>${title}</h2><p><a href="mailto:tiresimas@hotmail.com">メール</a></p></label>`;
+            }
+        }
+        else{
+            input = `<input type="radio" id="${ID}" name="select${index}" value=${i} onclick="radioClick(${i},${index},'select${index}')" />`;
             if(hascom){
                 input += `<label for="${ID}"><h2>${title}</h2><p>${q.comments[i]}</p></label>`;
             }else{
@@ -262,6 +290,9 @@ function fakeMessage() {
   
     setTimeout(function () {
       $(".loading").remove();
+      if(global_i ==-100){
+        return;
+      }
       let q = createQuestionElement(global_i);
       $(
         '<div class="message new"><figure class="avatar"><img src="img/logo.png" /></figure>' +
@@ -273,7 +304,7 @@ function fakeMessage() {
       setDate();
       updateScrollbar();
       q.appendTo($(".mCSB_container"));
-    }, 500 + Math.random() * 20 * 100);
+    },  Math.random() * 20 );
 }
 
 function fakeMessage2() {
@@ -300,5 +331,5 @@ function fakeMessage2() {
     setDate();
     updateScrollbar();
     i++;
-  }, 2000 + Math.random() * 20 * 100);
+  },  Math.random() * 20 );
 }
