@@ -1550,14 +1550,16 @@ function loadAsset() {
 function combineBuffer( model, bufferName ) {
 
 	let count = 0;
+	let downsample = 8;
 
 	model.traverse( function ( child ) {
 
 		if ( child.isMesh ) {
 
 			const buffer = child.geometry.attributes[ bufferName ];
-
-			count += buffer.array.length;
+            var len = buffer.array.length/3;
+			count += 3*Math.floor(len / downsample);
+			//count += buffer.array.length;
 
 		}
 
@@ -1572,9 +1574,18 @@ function combineBuffer( model, bufferName ) {
 		if ( child.isMesh ) {
 
 			const buffer = child.geometry.attributes[ bufferName ];
-
-			combined.set( buffer.array, offset );
-			offset += buffer.array.length;
+			var gi = 0;
+			buffer.array.forEach((e,i) => {
+				var n = Math.floor(i/3);
+				if( (n % downsample) == 0){
+					combined[gi] = e;
+					gi++;
+				}
+				
+			});
+			
+			//combined.set( buffer.array, offset );
+			offset += gi;
 
 		}
 
@@ -1584,16 +1595,19 @@ function combineBuffer( model, bufferName ) {
 
 }
 
-function pointMaterial(){
-	var uniforms = {
+var uniforms = {
+	pointTexture: { value: new THREE.TextureLoader().load( 'img/spark1.png' ) },
+	colorNum: { value: 0 },
+};
+var uniforms2 = {
+	pointTexture: { value: new THREE.TextureLoader().load( 'img/spark1.png' ) },
+	colorNum: { value: 0 },
+};
 
-		pointTexture: { value: new THREE.TextureLoader().load( 'img/spark1.png' ) }
-
-	};
-
+function pointMaterial(uniform){
 	const shaderMaterial = new THREE.ShaderMaterial( {
 
-		uniforms: uniforms,
+		uniforms: uniform,
 		vertexShader: document.getElementById( 'vertexshader' ).textContent,
 		fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
 
@@ -1638,8 +1652,8 @@ function rondomArch(positions1, positions2, scene, color,color2,N){
 	var mesh2 = null;
 	var psize = 0.1;
 
-	const shader_mat  = pointMaterial();
-
+	const shader_mat1  = pointMaterial(uniforms);
+    const shader_mat2  = pointMaterial(uniforms2);
 
 	const sizes = [];
 	for ( let i = 0; i < N; i ++ ) {
@@ -1647,8 +1661,8 @@ function rondomArch(positions1, positions2, scene, color,color2,N){
 		//mesh = new THREE.Points( geometry, new THREE.PointsMaterial( { size: psize, color: color } ) );
 		//mesh2 = new THREE.Points( geometry2, new THREE.PointsMaterial( { size: psize *2, color: color2 } ) );
 
-		mesh = new THREE.Points( geometry, shader_mat);
-		mesh2 = new THREE.Points( geometry2, shader_mat );
+		mesh = new THREE.Points( geometry, shader_mat1);
+		mesh2 = new THREE.Points( geometry2, shader_mat2 );
 		
 		mesh2.scale.x = mesh2.scale.y = mesh2.scale.z =  mesh.scale.x = mesh.scale.y = mesh.scale.z = scale;
         var offset = [ (2*Math.random()-1)*300,  - (2*Math.random()-1)*30,  depth/N*i - (2*Math.random()-1)*20  ];
@@ -1669,6 +1683,8 @@ function rondomArch(positions1, positions2, scene, color,color2,N){
 		start: Math.floor( 100 + 200 * Math.random() ),name:"huji"
 	} 
 	meshes.push(data);
+	uniforms.colorNum.value  = 0;
+	uniforms2.colorNum.value  = 1;
 	/*
 	data  = data.clone();
 	data.mesh = mesh2;
