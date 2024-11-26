@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <title>さくら保育園</title>
+        <title> Oragamura  </title>
     
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -357,13 +357,21 @@
                     </div>
                 </div>
             </nav>
+            <div id ="loading-box-id" class="loading-box">
+                <div class="cat">
+                  <div class="cat__body"></div>
+                  <div class="cat__body"></div>
+                  <div class="cat__tail"></div>
+                  <div class="cat__head"></div>
+                </div>
+            </div>
             <swiper-container id="sw-con" class="myswiper">
                 <!-- div class="swiper-wrapper"-->
                     <swiper-slide class="swiper-slide-c">
                     <div class="map border-deform">
                         <h3 class="border-deform" >アクセス地図</h3>
                         <div id="map">
-                            <img src="resources/map.png"  class="img-map border-deform"/>
+                            <img src="resources/map.png"  class="img-map border-deform" loading="lazy" />
                         </div>
                         <div class="map-c border-deform">
                             <!-- img src="resources/tane.png"  class="img-map2"/ -->
@@ -411,7 +419,7 @@
                     <div class="chat">
                         <div class="chat-title">
                         <figure class="avatar">
-                            <img src="img/logo2.png"/>
+                            <img src="img/logo2.png" loading="lazy" />
                         </figure>
                         <h3>FAQ（よくある質問） ボーボーボーット　</h3>
                         <h2>call center</h2>
@@ -574,11 +582,11 @@
                             <div id="msg-touba" class="labelDiv" style="Display:none">
                             <p class="anim2">鎌倉時代の阿弥陀堂があります。</p>
                             </div>
-                            <div id="img-touba" style="Display:none">
-                                <img
+                            <div id="img-touba" style="Display:none" loading="lazy" >
+                                <!-- img
                                 class="kenburns-right"
                                 src="img/touba.jpeg"
-                                alt="外観：園舎" />
+                                alt="外観：園舎" loading="lazy" / -->
                             </div>
 
                     </swiper-slide>
@@ -589,33 +597,33 @@
                             <div class="ayear-timeline">
                                 <li class="ayear-timeframe flip" style="grid-area:n1;">
 
-                                    <div class="flip-inner">
+                                    <div class="flip-inner" >
                                         <img
                                             class="inner-img"
                                             id="i-1"
                                             src="img/inner_1.jpeg"
-                                            alt="内観：教室１" />
+                                            alt="内観：教室１" loading="lazy" />
                                         <img
                                             class="inner-img-flip"
                                             id="i-2"
                                             src="img/inner_2.jpeg"
-                                            alt="内観：花まつり" />
+                                            alt="内観：花まつり" loading="lazy" />
                                     </div>
 
                                 </li>
                                 <li class="ayear-timeframe flip" style="grid-area:n2;">
 
-                                    <div class="flip-inner">
+                                    <div class="flip-inner" >
                                         <img
                                             class="inner-img"
                                             id="i-3"
                                             src="img/inner_3.jpeg"
-                                            alt="内観：教室１" />
+                                            alt="内観：教室１" loading="lazy" />
                                         <img
                                             class="inner-img-flip"
                                             id="i-4"
                                             src="img/inner_4.jpeg"
-                                            alt="内観：運動会" />
+                                            alt="内観：運動会" loading="lazy"  />
                                     </div>
 
                                 </li>
@@ -739,17 +747,17 @@
                                     <div class="ayear-timeline2">
                                         <li class="ayear-timeframe flip" style="grid-area:n2;">
         
-                                            <div class="flip-inner">
+                                            <div class="flip-inner" id="inner-main">
                                                 <img
                                                     class="inner-img"
                                                     id="i-3"
                                                     src="img/inner_3.jpeg"
-                                                    alt="内観：教室１" />
+                                                    alt="内観：教室１" loading="lazy" />
                                                 <img
                                                     class="inner-img-flip"
                                                     id="i-4"
                                                     src="img/inner_4.jpeg"
-                                                    alt="内観：運動会" />
+                                                    alt="内観：運動会" loading="lazy" />
                                             </div>
         
                                         </li>
@@ -792,12 +800,12 @@
                                                     class="inner-img"
                                                     id="i-1"
                                                     src="img/inner_1.jpeg"
-                                                    alt="内観：教室１" />
+                                                    alt="内観：教室１" loading="lazy" />
                                                 <img
                                                     class="inner-img-flip"
                                                     id="i-2"
                                                     src="img/inner_2.jpeg"
-                                                    alt="内観：花まつり" />
+                                                    alt="内観：花まつり" loading="lazy" />
                                             </div>
         
                                         </li>
@@ -825,30 +833,31 @@
                     </swiper-slide>
                     <swiper-slide class="swiper-slide-c">
                         <div class="lightbox" id="msg-0" style="Display:none">
-                            <span style="background-image: url('./img/kyoukai.png')"></span>
+                            <!-- span style="background-image: url('./img/kyoukai.png')"></span -->
+                            <span id="kyoukai-png"></span>
                             <p class="anim5">大宮さくら保育園</p>
                         </div>
-                        <!-- 外観、内観のimages  -->
+                        <!-- 外観、内観のimages  >
                         <img
                         class="scene-img"
                         id="o-1"
                         src="img/outer_1.jpg"
-                        alt="外観：桜の木" />
+                        alt="外観：桜の木" loading="lazy" />
                         <img
                         class="scene-img"
                         id="o-2"
                         src="img/outer_2.jpg"
-                        alt="外観：園舎" />
+                        alt="外観：園舎" loading="lazy"  />
                         <img
                         class="scene-img"
                         id="o-3"
                         src="img/outer_3.jpg"
-                        alt="外観：門" />
+                        alt="外観：門" loading="lazy" />
                         <img
                         class="scene-img"
                         id="o-4"
                         src="img/outer_4.jpg"
-                        alt="外観：遊具" />
+                        alt="外観：遊具" loading="lazy" /-->
                         <div id="msg-policy1" class="labelDiv0" style="Display:none">
                             <h1 class="anim1"><span class="text-combine">1</span> あかるく元気な子</h1>
                         </div>
@@ -899,10 +908,11 @@
                     <small id="cr">© Tiresimas Co. Ltd. 2024</small>
                 </div>
             </div>
-		    <script src="https://kit.fontawesome.com/61d5eeebab.js" crossorigin="anonymous"></script>
+		    
 		    <script src="js/easing.js"></script>
 		    <script src="js/inertiaScroll.js"></script>
-		    <script type="module" src="js/main.js"></script>
+		    <script type="module" src="js/home-intro.js"></script>
+            <!--script src="js/rdc.js"></script-->
 		    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 		    <script src="js/testbot.js"></script>
 		    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" width="0" height="0">

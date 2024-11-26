@@ -367,7 +367,25 @@ function scaleTrans(on,name) {
 	if(on){
 		target.classList.remove("display-0");
 		target.classList.remove("scale-0");
-		target.classList.add("scale-on");
+		switch(name){
+			case "o-2":
+			case "o-4":
+				{
+					target.classList.add("scale-on2");
+				break;
+				}
+			case "o-3":
+					{
+						target.classList.add("scale-on3");
+					break;
+					}
+			default:
+				{
+					target.classList.add("scale-on");
+					break;
+				}
+		}
+		
 	}else{
 		target.classList.remove("display-0");
 		target.classList.remove("scale-on");
@@ -1803,6 +1821,7 @@ class playMonitor{
 	autoplayOn = false
 	threeEnable = false
 	threeOn = false
+	loaded  = false;
 	selectPlay(three){
 		if(three){
 			if(this.autoplayOn){
@@ -1816,7 +1835,11 @@ class playMonitor{
 			
 		}else if(!this.autoplayOn){
 			this.threeOn = false;
-			this.AutoPlay();
+			if(!this.loaded){
+				this.LoadingPlay();
+			}else{
+				this.AutoPlay();
+			}
 			
 		}
 	    if(!this.threeOn){
@@ -1841,6 +1864,9 @@ class playMonitor{
 		return inter;
 	}
     closeSignal = false;
+	LoadingPlay(){
+		
+	}
 	AutoPlay(){
 		this.autoplayOn = true;
 		var main1 = ()=>{
@@ -1872,7 +1898,6 @@ class playMonitor{
 			$('#msg-policy4').css("display", "block");
 			scaleTrans(true,"o-4");
 		}
-		
 		var main5 = ()=>{
 			//console.log("main5");
 			$('#msg-policy4').css("display", "none");
@@ -1887,7 +1912,7 @@ class playMonitor{
 			inter = this.AutoMain(main1,inter,5000,2000);
 			inter = this.AutoMain(main2,inter,2000,2000);
 			inter = this.AutoMain(main3,inter,2000,2000);
-			inter = this.AutoMain(main4,inter,2000,3000);
+			inter = this.AutoMain(main4,inter,2000,6000);
 			inter = this.AutoMain(main5,inter,2000,15000);
 			inter = this.AutoMain(main0,inter,2000,4000);
 		};
@@ -1915,6 +1940,96 @@ class playMonitor{
 		});
 	    pMonitor.plyings = [];
 	}
+    AddImages(manager) {
+	    var data =[ { 
+	      url:"img/touba.jpeg",
+	      parent:"#img-touba",
+	      id : undefined,
+	      class :"kenburns-right",
+	      alt:"外観：園舎",
+	    },
+	    { 
+	      url:"img/kyoukai.png",
+	      parent:"-background-image",
+	      id:"kyoukai-png",
+	      class : undefined,
+	      alt: undefined,
+	    },
+	    { 
+	      url:"img/outer_1.jpg",
+	      parent:">#msg-0",
+	      id:"o-1",
+	      class :"scene-img",
+	      alt:"外観：桜の木",
+	    },
+	    { 
+	      url:"img/outer_2.jpg",
+	      parent:">#msg-0",
+	      id:"o-2",
+	      class :"scene-img",
+	      alt:"外観：園舎",
+	    },
+	    { 
+	      url:"img/outer_3.jpg",
+	      parent:">#msg-0",
+	      id:"o-3",
+	      class :"scene-img",
+	      alt:"外観：門",
+	    },
+	    { 
+	      url:"img/outer_4.jpg",
+	      parent:">#msg-0",
+	      id:"o-4",
+	      class :"scene-img",
+	      alt:"外観：遊具",
+	    },
+	    ]
+		for(let i in data){
+
+			var create = ()=>{
+				const d  = data[i];
+			    new THREE.ImageLoader(manager)
+			      .setCrossOrigin( '*' )
+			      .load(d.url , function ( img,i ) {
+					     ;console.log("ImageLoader   >>>> ",d);
+					  	if(d.parent[0] == '#'){
+					        if(d.alt)img.alt = d.alt;
+					        if(d.id) img.setAttribute("id",d.id);
+					        var p = document.getElementById(d.parent.substr(1,));
+					        p.appendChild(img);
+					      
+					    }else if(d.parent[0] == '>'){
+					        if(d.alt)img.alt = d.alt;
+					        if(d.id) img.setAttribute("id",d.id);
+					        var p = document.getElementById(d.parent.substr(2,));
+					        p.parentNode.insertBefore(img,p.nextSibling);
+					    }else if(d.parent[0] == '-'){
+					        var img_element= document.getElementById(d.id);
+					        img_element.style.backgroundImage = `url('${d.url}')`;
+					    }
+			
+			      } );
+				};
+			create();
+		}
+
+   }
+	Loading(){
+	  console.log( 'Loading resources!' );
+      let manager = new THREE.LoadingManager();
+      manager.onProgress = function ( item, loaded, total ) {
+          console.log( 'Manager onProgress: loading of', item, 'finished; ', loaded, ' of ', total, ' objects loaded.' );
+      };
+      manager.onLoad = function () {
+          console.log( 'Manager onLoad called, render started.' );
+		  pMonitor.loaded = true;
+		  var el = document.getElementById("loading-box-id");
+		  el.style.display = "none";
+		  pMonitor.AutoPlayClose();
+          pMonitor.AutoPlay();
+      };
+	  this.AddImages(manager);
+}
 }
 const pMonitor = new playMonitor();
 
@@ -1984,7 +2099,7 @@ function createScene(){
 }
 
 function init() {
-
+    pMonitor.Loading();
 	pMonitor.selectPlay(false);
 
     container = document.createElement('div');
@@ -2014,6 +2129,8 @@ function home_img_on(on){
 		for(let name in imgs){
 			var target = document.getElementById(name);
 			target.classList.remove("scene-on");
+			target.classList.remove("scene-on2");
+			target.classList.remove("scene-on3");
 			target.classList.add("display-0");
 		}
 	}
