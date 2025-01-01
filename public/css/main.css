@@ -1333,7 +1333,7 @@ i {
 }
 
 @media screen and ((max-width: 780px) or (max-height: 1000px)) {
-  .news-list .item a {
+  .news-list .item .news-elem{
     flex-wrap: wrap;
   }
   .news-list .item .date {
