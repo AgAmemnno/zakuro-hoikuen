@@ -1283,8 +1283,8 @@ i {
   padding: 0;
 }
 
-.news-list .item a {
-  margin: 8% 6% 0% 0%;
+.news-list .item .news-elem {
+  margin: 0% 6% 0% 0%;
   display: flex;
   flex-wrap: wrap;
   flex-wrap: nowrap;
@@ -1295,7 +1295,7 @@ i {
   background-color: rgb(226, 226, 226);
 }
 
-.news-list .item:first-child a {
+.news-list .item:first-child .news-elem {
   border-top: 1px solid #CCC;
 }
 
